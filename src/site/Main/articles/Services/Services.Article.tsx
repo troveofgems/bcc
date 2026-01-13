@@ -28,6 +28,7 @@ export const ServicesArticle = (
                         Services
                     </DialogTitle>
                     <DialogDescription>
+                        Services are subject to modification
                         <span className="image main"><img src="/src/images/pic01.jpg" alt=""/></span>
                         <ScrollArea className="h-50 rounded-md border paddingTopL">
                             <p>

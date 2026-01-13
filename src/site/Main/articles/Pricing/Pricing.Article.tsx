@@ -28,11 +28,12 @@ export const PricingArticle = (
                         Pricing
                     </DialogTitle>
                     <DialogDescription>
+                        Pricing is based on Tier and Add-on Packages
                         <span className="image main"><img src="/src/images/pic02.jpg" alt=""/></span>
                         <ScrollArea className="h-50 border">
                             <div>
                                 <div>
-                                    <p>Basic 1 Hour - $125</p>
+                                    Basic 1 Hour - $125
                                     <ul>
                                         <li>
                                             Surface dusting, vacuuming, kitchen & bathroom surface cleaning, and trash removal.
@@ -40,7 +41,7 @@ export const PricingArticle = (
                                     </ul>
                                 </div>
                                 <div>
-                                    <p>Standard 2 Hours - $200</p>
+                                    Standard 2 Hours - $200
                                     <ul>
                                         <li>
                                             Includes basic services with extended attention to kitchens, bathrooms, floor care, and light
@@ -49,7 +50,7 @@ export const PricingArticle = (
                                     </ul>
                                 </div>
                                 <div>
-                                    <p>Premium 3 Hours - $300</p>
+                                    Premium 3 Hours - $300
                                     <ul>
                                         <li>
                                             Comprehensive cleaning with focused attention on high-traffic areas, detailed surfaces, and
@@ -58,7 +59,7 @@ export const PricingArticle = (
                                     </ul>
                                 </div>
                                 <div>
-                                    <p>Nude - $75</p>
+                                    Nude - $75
                                     <ul>
                                         <li>
                                             Conducted professionally and discreetly through-out the appointment.
