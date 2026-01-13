@@ -4,13 +4,13 @@ import {
     DialogDescription,
     DialogHeader,
     DialogTitle
-} from "../../../../ui/dialog";
+} from "../../../../components/ui/dialog.tsx";
 import {
     ScrollArea
-} from "../../../../ui/scroll-area";
+} from "../../../../components/ui/scroll-area.tsx";
 import type {Dispatch, SetStateAction} from "react";
 
-export const ServicesArticle = (
+export const AboutArticle = (
     {
         viewingArticle,
         closeViewingSection,
@@ -21,23 +21,29 @@ export const ServicesArticle = (
     }
 ) => {
     return (
-        <Dialog open={viewingArticle} modal={true} onOpenChange={() => closeViewingSection("none")}>
+        <Dialog
+            open={viewingArticle}
+            onOpenChange={() => closeViewingSection("none")}
+        >
             <DialogContent className={"dialogStyles"}>
                 <DialogHeader>
                     <DialogTitle className={"major"}>
-                        Services
+                        About
                     </DialogTitle>
                     <DialogDescription>
-                        <span className="image main"><img src="/src/images/pic01.jpg" alt=""/></span>
                         <ScrollArea className="h-72 rounded-md border">
-                            <p>
-                                Regular Services
-                            </p>
-                            <p>Additional Services</p>
+                            <span className="image main"><img src="/src/images/pic03.jpg" alt=""/></span>
+                            About Kyle & his services...
                         </ScrollArea>
                     </DialogDescription>
                 </DialogHeader>
             </DialogContent>
         </Dialog>
-    )
+    );
 }
+
+/*
+<article id="about">
+    <span className="image main"><img src="/src/images/pic03.jpg" alt=""/></span>
+    <p>About Kyle & his services...</p>
+</article>*/

@@ -4,11 +4,11 @@ import {
     DialogDescription,
     DialogHeader,
     DialogTitle
-} from "../../../../ui/dialog";
+} from "../../../../components/ui/dialog.tsx";
 import type {Dispatch, SetStateAction} from "react";
 import {
     ScrollArea
-} from "../../../../ui/scroll-area";
+} from "../../../../components/ui/scroll-area.tsx";
 import {ContactForm} from "./Contact.Form.tsx";
 
 export const ContactArticle = (

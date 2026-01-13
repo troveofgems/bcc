@@ -1660,3 +1660,32 @@ input, select, textarea {
 		body.is-preload #footer {
 			opacity: 1;
 		}
+
+		.collapseBtn {
+			display: none;
+			height: 0;
+			width: 0;
+			visibility: hidden;
+		}
+
+		.smallPadBottom {
+			padding-bottom: .25rem;
+			margin-bottom: .1rem;
+		}
+
+		.addPad {
+			margin-bottom: 2rem;
+		}
+
+.addPadTop {
+	margin-top: 2rem;
+}
+
+.addPadTopLarge {
+	margin-top: 4rem;
+}
+
+.forceFlex {
+	display: flex;
+	flex-direction: row-reverse;
+}
