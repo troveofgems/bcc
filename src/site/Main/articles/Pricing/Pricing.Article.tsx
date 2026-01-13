@@ -29,7 +29,7 @@ export const PricingArticle = (
                     </DialogTitle>
                     <DialogDescription>
                         <span className="image main"><img src="/src/images/pic02.jpg" alt=""/></span>
-                        <ScrollArea className="h-72 rounded-md border">
+                        <ScrollArea className="rounded-md border">
                             <div>
                                 <div>
                                     <p>Basic 1 Hour - $125</p>
