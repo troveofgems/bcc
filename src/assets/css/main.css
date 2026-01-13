@@ -1689,3 +1689,7 @@ input, select, textarea {
 	display: flex;
 	flex-direction: row-reverse;
 }
+
+.fullWidth	{
+	width: 100%;
+}
