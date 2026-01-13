@@ -8,21 +8,21 @@ import {
     FormItem,
     FormLabel,
     FormMessage,
-} from "@/components/ui/form.tsx";
+} from "../../../../components/ui/form.tsx";
 import {
     Select,
     SelectContent,
     SelectItem,
     SelectTrigger,
     SelectValue,
-} from "@/components/ui/select";
-import { Input } from "@/components/ui/input";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Label } from "@/components/ui/label";
+} from "../../../../components/ui/select";
+import { Input } from "../../../../components/ui/input";
+import { Checkbox } from "../../../../components/ui/checkbox";
+import { Label } from "../../../../components/ui/label";
 
-import { Button } from "@/components/ui/button";
+import { Button } from "../../../../components/ui/button";
 
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
+import { RadioGroup, RadioGroupItem } from "../../../../components/ui/radio-group"
 
 export const ContactForm = () => {
     const formSchema = z.object({
@@ -179,7 +179,7 @@ export const ContactForm = () => {
                         <FormDescription className={"hidden"}>
                             Would you like Recurring Services?
                         </FormDescription>
-                        <Select className={"forceFlex"}>
+                        <Select>
                             <SelectTrigger className={"forceFlex"}>
                                 <SelectValue placeholder="Frequency Options" />
                             </SelectTrigger>

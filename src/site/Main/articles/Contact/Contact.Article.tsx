@@ -9,7 +9,7 @@ import type {Dispatch, SetStateAction} from "react";
 import {
     ScrollArea
 } from "../../../../components/ui/scroll-area.tsx";
-import {ContactForm} from "./Contact.Form.tsx";
+/*import {ContactForm} from "./Contact.Form.tsx";*/
 
 export const ContactArticle = (
     {
@@ -32,7 +32,7 @@ export const ContactArticle = (
                         Bare & Clean Co. accepts new clients by referral only to maintain discretion, consistency, and
                         service standards.
                         <ScrollArea className="h-72 rounded-md border paddingTopL">
-                            <ContactForm />
+                            {/*<ContactForm />*/}
                         </ScrollArea>
                         <ul className="icons">
                             <li><a href="#" className="icon brands fa-facebook-f"><span className="label">Facebook</span></a></li>
