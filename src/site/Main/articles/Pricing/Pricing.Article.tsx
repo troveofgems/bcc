@@ -10,6 +10,8 @@ import {
     ScrollArea
 } from "../../../../components/ui/scroll-area.tsx";
 
+import Image1 from "../../../../images/pic01.jpg";
+
 export const PricingArticle = (
     {
         viewingArticle,
@@ -29,7 +31,7 @@ export const PricingArticle = (
                     </DialogTitle>
                     <DialogDescription>
                         Pricing is based on Tier and Add-on Packages
-                        <span className="image main"><img src="/src/images/pic02.jpg" alt=""/></span>
+                        <span className="image main"><img src={Image1} alt=""/></span>
                         <ScrollArea className="h-50 border">
                             <div>
                                 <div>
