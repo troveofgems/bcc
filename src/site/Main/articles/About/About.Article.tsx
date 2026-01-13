@@ -31,8 +31,8 @@ export const AboutArticle = (
                         About
                     </DialogTitle>
                     <DialogDescription>
+                        <span className="image main"><img src="/src/images/pic03.jpg" alt=""/></span>
                         <ScrollArea className="h-50 rounded-md border">
-                            <span className="image main"><img src="/src/images/pic03.jpg" alt=""/></span>
                             About Kyle & his services...
                         </ScrollArea>
                     </DialogDescription>

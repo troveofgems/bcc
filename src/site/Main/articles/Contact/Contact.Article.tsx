@@ -25,8 +25,8 @@ export const ContactArticle = (
         <Dialog open={viewingArticle} modal={true} onOpenChange={() => closeViewingSection("none")}>
             <DialogContent className={"dialogStyles"}>
                 <DialogHeader>
-                    <DialogTitle>
-                        <h2 className="major">Contact</h2>
+                    <DialogTitle className="major">
+                        Contact
                     </DialogTitle>
                     <DialogDescription>
                         Bare & Clean Co. accepts new clients by referral only to maintain discretion, consistency, and

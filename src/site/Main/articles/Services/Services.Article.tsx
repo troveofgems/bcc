@@ -29,7 +29,7 @@ export const ServicesArticle = (
                     </DialogTitle>
                     <DialogDescription>
                         <span className="image main"><img src="/src/images/pic01.jpg" alt=""/></span>
-                        <ScrollArea className="h-72 rounded-md border">
+                        <ScrollArea className="h-50 rounded-md border paddingTopL">
                             <p>
                                 Regular Services
                             </p>
