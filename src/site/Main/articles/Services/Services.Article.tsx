@@ -10,6 +10,8 @@ import {
 } from "../../../../components/ui/scroll-area.tsx";
 import type {Dispatch, SetStateAction} from "react";
 
+import Image2 from "../../../../images/pic02.jpg";
+
 export const ServicesArticle = (
     {
         viewingArticle,
@@ -29,7 +31,7 @@ export const ServicesArticle = (
                     </DialogTitle>
                     <DialogDescription>
                         Services are subject to modification
-                        <span className="image main"><img src="/src/images/pic01.jpg" alt=""/></span>
+                        <span className="image main"><img src={Image2} alt=""/></span>
                         <ScrollArea className="h-50 rounded-md border paddingTopL">
                             <p>
                                 Regular Services

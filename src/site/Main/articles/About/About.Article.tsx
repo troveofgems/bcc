@@ -10,6 +10,8 @@ import {
 } from "../../../../components/ui/scroll-area.tsx";
 import type {Dispatch, SetStateAction} from "react";
 
+import Image3 from "../../../../images/pic03.jpg";
+
 export const AboutArticle = (
     {
         viewingArticle,
@@ -31,7 +33,7 @@ export const AboutArticle = (
                         About
                     </DialogTitle>
                     <DialogDescription>
-                        <span className="image main"><img src="/src/images/pic03.jpg" alt=""/></span>
+                        <span className="image main"><img src={Image3} alt=""/></span>
                         <ScrollArea className="h-50 rounded-md border">
                             About Kyle & his services...
                         </ScrollArea>
