@@ -696,7 +696,7 @@ input, select, textarea {
 
 		.image.main {
 			display: block;
-			margin: 2.5rem 0;
+			margin: 1.5rem 0;
 			width: 100%;
 		}
 
@@ -1692,4 +1692,12 @@ input, select, textarea {
 
 .fullWidth	{
 	width: 100%;
+}
+
+.ulOverride {
+	list-style-type: disclosure-closed;
+}
+
+.collapseMargins {
+	margin: 0;
 }

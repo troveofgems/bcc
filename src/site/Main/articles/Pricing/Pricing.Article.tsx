@@ -30,41 +30,41 @@ export const PricingArticle = (
                         Pricing
                     </DialogTitle>
                     <DialogDescription>
-                        Pricing is based on Tier and Add-on Packages
-                        <span className="image main"><img src={Image1} alt=""/></span>
-                        <ScrollArea className="h-50 border">
+                        Bare & Clean Co. provides structured, time-based residential cleaning for private clients.
+                        Rates reflect service scope, discretion, and elevated standards. Final pricing may vary based
+                        on residence size, layout, and service frequency.
+                        <ScrollArea className="h-68 border">
+                            <span className="image main"><img src={Image1} alt=""/></span>
                             <div>
                                 <div>
-                                    Basic 1 Hour - $125
-                                    <ul>
+                                    Foundation 1 Hour
+                                    <div>
+                                        <i>
+                                            Includes Foundation Services.
+                                        </i>
+                                    </div>
+                                    <ul className={"collapseMargins"}>
                                         <li>
-                                            Surface dusting, vacuuming, kitchen & bathroom surface cleaning, and trash removal.
+                                            $125 for Underwear (Uniform)
+                                        </li>
+                                        <li>
+                                            $200 for Nude
                                         </li>
                                     </ul>
                                 </div>
-                                <div>
-                                    Standard 2 Hours - $200
-                                    <ul>
+                                <div className={"addPadTop"}>
+                                    Elevated 2 Hours
+                                    <div>
+                                        <i>
+                                            Includes Elevated and Foundation Services.
+                                        </i>
+                                    </div>
+                                    <ul className={"collapseMargins"}>
                                         <li>
-                                            Includes basic services with extended attention to kitchens, bathrooms, floor care, and light
-                                            (fixture?) detailing.
+                                            $200 for Underwear (Uniform)
                                         </li>
-                                    </ul>
-                                </div>
-                                <div>
-                                    Premium 3 Hours - $300
-                                    <ul>
                                         <li>
-                                            Comprehensive cleaning with focused attention on high-traffic areas, detailed surfaces, and
-                                            overall presentation.
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div>
-                                    Nude - $75
-                                    <ul>
-                                        <li>
-                                            Conducted professionally and discreetly through-out the appointment.
+                                            $300 for Nude
                                         </li>
                                     </ul>
                                 </div>
