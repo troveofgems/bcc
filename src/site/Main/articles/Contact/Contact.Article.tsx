@@ -28,7 +28,7 @@ export const ContactArticle = (
                     <DialogTitle className="major">
                         Contact
                     </DialogTitle>
-                    <DialogDescription>
+                    <DialogDescription className={"contact_description"}>
                         Bare & Clean Co. accepts new clients by referral only to maintain discretion, consistency, and
                         service standards.
                         <ScrollArea className="h-72 rounded-md border paddingTopL">

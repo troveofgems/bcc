@@ -13,7 +13,7 @@ function App() {
           <div id={"wrapper"}>
               <Header setViewingSection={setViewingSection} />
               <MainSiteContent viewingSection={viewingSection} setViewingSection={setViewingSection} />
-              <Footer />
+              <Footer setViewingSection={setViewingSection} />
           </div>
           <Background />
       </>

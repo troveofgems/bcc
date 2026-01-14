@@ -2,6 +2,7 @@ import {AboutArticle} from "./articles/About/About.Article.tsx";
 import {ContactArticle} from "./articles/Contact/Contact.Article.tsx";
 import {PricingArticle} from "./articles/Pricing/Pricing.Article.tsx";
 import {ServicesArticle} from "./articles/Services/Services.Article.tsx";
+import {TermsAndConditionsArticle} from "./articles/TermsAndConditions/TermsAndConditions.Article.tsx";
 import type {Dispatch, SetStateAction} from "react";
 
 export const MainSiteContent = (
@@ -30,6 +31,10 @@ export const MainSiteContent = (
             />
             <AboutArticle
                 viewingArticle={viewingSection === "About"}
+                closeViewingSection={setViewingSection}
+            />
+            <TermsAndConditionsArticle
+                viewingArticle={viewingSection === "TermsAndConditions"}
                 closeViewingSection={setViewingSection}
             />
         </div>

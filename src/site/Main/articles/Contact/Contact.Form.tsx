@@ -58,12 +58,12 @@ export const ContactForm = () => {
     return (
         <>
             <Form {...form}>
-                <form onSubmit={form.handleSubmit(onSubmit)} className={"fullWidth"}>
+                <form onSubmit={form.handleSubmit(onSubmit)} className={"fullWidth contact_form"}>
                     <h4 className={"major"}>Client Info</h4>
                     <FormItem>
                         <FormLabel className={"addPadTop"}>Client Full Name</FormLabel>
                         <Input placeholder="Full Name" type={"text"} />
-                        <FormDescription>
+                        <FormDescription className={"input_description"}>
                             This is your full name.
                         </FormDescription>
                         <FormMessage />

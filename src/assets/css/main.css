@@ -1720,8 +1720,15 @@ input, select, textarea {
 }
 
 @media (max-width: 800px) {
+	.contact_description,
 	.services_description,
 	.pricing_description {
+		text-align: start;
+	}
+
+	.contact_form input,
+	.contact_form label,
+	.contact_form p {
 		text-align: start;
 	}
 }
