@@ -23,8 +23,11 @@ import { Label } from "../../../../components/ui/label";
 import { Button } from "../../../../components/ui/button";
 
 import { RadioGroup, RadioGroupItem } from "../../../../components/ui/radio-group"
+import {useEffect, useState} from "react";
 
 export const ContactForm = () => {
+    const [recurringServicesRequested, setRecurringServicesRequested] = useState(true);
+
     const formSchema = z.object({
         username: z.string().min(2, {
             message: "Username must be at least 2 characters.",
@@ -42,6 +45,14 @@ export const ContactForm = () => {
         // Do something with the form values.
         // ✅ This will be type-safe and validated.
         console.log(values);
+    }
+
+    useEffect(() => {
+
+    }, [recurringServicesRequested]);
+
+    const toggleRecurringServices = () => {
+        return setRecurringServicesRequested(!recurringServicesRequested);
     }
 
     return (
@@ -83,7 +94,7 @@ export const ContactForm = () => {
                     </FormItem>
                     <h4 className={"major"}>Referral Info</h4>
                     <FormItem>
-                        <FormLabel>Referred By</FormLabel>
+                        <FormLabel className={"addPadTop"}>Referred By</FormLabel>
                         <Input placeholder="John Smith" type={"text"} />
                         <FormDescription>
                             This is who referred you to this service.
@@ -110,7 +121,7 @@ export const ContactForm = () => {
                     <h4 className={"major"}>Scheduling Preferences</h4>
                     <div>
                         <FormItem>
-                            <FormLabel className={"smallPadBottom"}>Preferred Days</FormLabel>
+                            <FormLabel className={"smallPadBottom addPadTop"}>Preferred Days</FormLabel>
                             <FormDescription className={"smallPadBottom"}>
                                 What days are you looking for services?
                             </FormDescription>
@@ -157,11 +168,11 @@ export const ContactForm = () => {
 
                     <h4 className={"major"}>Recurring Services</h4>
                     <FormItem className={"addPad"}>
-                        <FormLabel className={"smallPadBottom"}>Would you like recurring services?</FormLabel>
+                        <FormLabel className={"smallPadBottom addPadTop"}>Would you like recurring services?</FormLabel>
                         <FormDescription className={"hidden"}>
                             Would you like Recurring Services?
                         </FormDescription>
-                        <RadioGroup defaultValue="option-one" className={"flex flex-row"}>
+                        <RadioGroup defaultValue="option-one" className={"flex flex-row"} onChange={() => toggleRecurringServices()}>
                             <div className="flex items-center space-x-2">
                                 <RadioGroupItem value="option-one" id="option-one" className={"collapseBtn"}/>
                                 <Label htmlFor="option-one">Yes</Label>
@@ -174,23 +185,25 @@ export const ContactForm = () => {
                         <FormMessage />
                     </FormItem>
 
-                    <FormItem className={"addPad"}>
-                        <FormLabel className={"smallPadBottom"}>At What Frequency?</FormLabel>
-                        <FormDescription className={"hidden"}>
-                            Would you like Recurring Services?
-                        </FormDescription>
-                        <Select>
-                            <SelectTrigger className={"forceFlex"}>
-                                <SelectValue placeholder="Frequency Options" />
-                            </SelectTrigger>
-                            <SelectContent>
-                                <SelectItem value="weekly">Weekly</SelectItem>
-                                <SelectItem value="biweekly">Bi-Weekly</SelectItem>
-                                <SelectItem value="monthly">Monthly</SelectItem>
-                            </SelectContent>
-                        </Select>
-                        <FormMessage />
-                    </FormItem>
+                    {recurringServicesRequested && (
+                        <FormItem className={"addPad"}>
+                            <FormLabel className={"smallPadBottom"}>At What Frequency?</FormLabel>
+                            <FormDescription className={"hidden"}>
+                                Would you like Recurring Services?
+                            </FormDescription>
+                            <Select>
+                                <SelectTrigger className={"forceFlex"}>
+                                    <SelectValue placeholder="Frequency Options" />
+                                </SelectTrigger>
+                                <SelectContent className={"select_content_box"}>
+                                    <SelectItem value="weekly" className={"select_content_box_option"}>Weekly</SelectItem>
+                                    <SelectItem value="biweekly" className={"select_content_box_option"}>Bi-Weekly</SelectItem>
+                                    <SelectItem value="monthly" className={"select_content_box_option"}>Monthly</SelectItem>
+                                </SelectContent>
+                            </Select>
+                            <FormMessage />
+                        </FormItem>
+                    )}
 
                     <div className="flex items-start gap-3 addPadTopLarge">
                         <div className="grid gap-2">
