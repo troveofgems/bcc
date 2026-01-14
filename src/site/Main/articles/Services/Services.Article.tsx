@@ -59,7 +59,7 @@ export const ServicesArticle = (
                                             Trash removal
                                         </li>
                                         <li>
-                                            Kitchen (Light):
+                                            <h4>Kitchen (Light):</h4>
                                             <ul className={"collapseMargins"}>
                                                 <li>Countertop wipe-down</li>
                                                 <li>Sink and faucet cleaning</li>
@@ -67,7 +67,7 @@ export const ServicesArticle = (
                                             </ul>
                                         </li>
                                         <li>
-                                            Bathroom (Light):
+                                            <h4>Bathroom (Light):</h4>
                                             <ul>
                                                 <li>Sink and faucet cleaning</li>
                                                 <li>Toilet exterior wipe</li>
@@ -88,7 +88,7 @@ export const ServicesArticle = (
                                     </div>
                                     <ul>
                                         <li>
-                                            Kitchen:
+                                            <h4>Kitchen:</h4>
                                             <ul className={"collapseMargins"}>
                                                 <li>Full countertop cleaning and sanitizing</li>
                                                 <li>Exterior appliance wipe-down</li>
@@ -97,7 +97,7 @@ export const ServicesArticle = (
                                             </ul>
                                         </li>
                                         <li>
-                                            Bathrooms:
+                                            <h4>Bathrooms:</h4>
                                             <ul className={"collapseMargins"}>
                                                 <li>Cleaning and sanitizing toilets</li>
                                                 <li>Shower and tub cleaning</li>
@@ -106,7 +106,7 @@ export const ServicesArticle = (
                                             </ul>
                                         </li>
                                         <li>
-                                            Living & Bedrooms:
+                                            <h4>Living & Bedrooms:</h4>
                                             <ul>
                                                 <li>Dusting furniture and surfaces</li>
                                                 <li>Vacuuming or floor care</li>
