@@ -29,7 +29,7 @@ export const PricingArticle = (
                     <DialogTitle className={"major"}>
                         Pricing
                     </DialogTitle>
-                    <DialogDescription>
+                    <DialogDescription className={"pricing_description"}>
                         Bare & Clean Co. provides structured, time-based residential cleaning for private clients.
                         Rates reflect service scope, discretion, and elevated standards. Final pricing may vary based
                         on residence size, layout, and service frequency.

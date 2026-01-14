@@ -1701,3 +1701,10 @@ input, select, textarea {
 .collapseMargins {
 	margin: 0;
 }
+
+@media (max-width: 800px) {
+	.services_description,
+	.pricing_description {
+		text-align: start;
+	}
+}

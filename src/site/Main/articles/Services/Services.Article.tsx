@@ -29,7 +29,7 @@ export const ServicesArticle = (
                     <DialogTitle className={"major"}>
                         Services
                     </DialogTitle>
-                    <DialogDescription>
+                    <DialogDescription className={"services_description"}>
                         Bare & Clean Co. provides professional residential cleaning through structured, time-based
                         offerings designed for private clients who value discretion, consistency, and elevated
                         standards.
