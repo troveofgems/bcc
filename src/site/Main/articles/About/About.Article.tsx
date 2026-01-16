@@ -10,8 +10,6 @@ import {
 } from "../../../../components/ui/scroll-area.tsx";
 import type {Dispatch, SetStateAction} from "react";
 
-import Image3 from "../../../../images/pic03.jpg";
-
 export const AboutArticle = (
     {
         viewingArticle,
@@ -32,10 +30,20 @@ export const AboutArticle = (
                     <DialogTitle className={"major"}>
                         About
                     </DialogTitle>
-                    <DialogDescription>
-                        <span className="image main"><img src={Image3} alt=""/></span>
-                        <ScrollArea className="h-50 rounded-md border">
-                            About Kyle & his services...
+                    <DialogDescription className={"about_description"}>
+                        {/*<span className="image main"><img src={Image3} alt=""/></span>*/}
+                        <ScrollArea className="h-68 rounded-md border addPad">
+                            <div>
+                                Bare & Clean Co. is a private, boutique residential cleaning service designed for clients
+                                who value discretion, consistency, and elevated standards. We provide structured, time-based
+                                cleaning services tailored to each residence and delivered with a refined, intentional
+                                presence. While our presentation options may be distinctive, the nature of our work remains
+                                strictly professional. Bare & Clean Co. offers residential cleaning services only; no
+                                sexual services, physical contact, or transactional intimacy are offered, implied, or
+                                permitted under any circumstance. Operating on a referral-only model, we prioritize trust,
+                                professionalism, and long-term client relationships, delivering a modern cleaning service
+                                that is considered, reliable, and clearly defined.
+                            </div>
                         </ScrollArea>
                     </DialogDescription>
                 </DialogHeader>

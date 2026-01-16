@@ -132,6 +132,10 @@ export const ServicesArticle = (
                             Services are limited to accessible areas.
                             Heavy lifting, hazardous materials, and biohazards are excluded.
                             Final service scope is determined by time, layout, and condition of the residence.
+
+                            <div className={"addPadTop"}>
+                                * <i>You Supply Your Own Cleaning Supplies</i>
+                            </div>
                         </ScrollArea>
                     </DialogDescription>
                 </DialogHeader>

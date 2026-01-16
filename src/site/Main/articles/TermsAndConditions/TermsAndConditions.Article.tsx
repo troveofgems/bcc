@@ -24,7 +24,7 @@ export const TermsAndConditionsArticle = (
         <Dialog open={viewingArticle} modal={true} onOpenChange={() => closeViewingSection("none")}>
             <DialogContent className={"dialogStyles"}>
                 <DialogHeader>
-                    <DialogTitle className={"major addPadTop"}>
+                    <DialogTitle className={"addPadTop"}>
                         Terms And Conditions
                     </DialogTitle>
                     <DialogDescription className={"services_description"}>
@@ -54,6 +54,13 @@ export const TermsAndConditionsArticle = (
                                 Bare & Clean Co. Clients are strictly prohibited from taking any video or photography
                                 of the cleaners without their express consent. Violating this rule will result in
                                 immediate termination of service.
+                            </div>
+                            <h4 className={"addPadTop"}>Cleaning Supplies & Tools Agreement</h4>
+                            <div>
+                                Bare & Clean Co Clients are required to provide their own cleaning products, supplies,
+                                and tools. The client also relinquishes Bare & Clean Co. and its cleaners from any
+                                responsibility resulting from cleaning product damage - it is the Client's responsibility
+                                to ensure that all products provided are safe and appropriate for home surfaces and floors.
                             </div>
                             <h4 className={"addPadTop"}>Payment and Refunds</h4>
                             <div>

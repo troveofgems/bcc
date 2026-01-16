@@ -19,7 +19,7 @@ export const Header = (
             <div className="content">
                 <div className="inner">
                     <h1>Bare & Clean Co.</h1>
-                    <p>Private, referral-based cleaning services. All information is handled confidentially.</p>
+                    <p>Private, referral-based cleaning services in the PHX Area. All information is handled confidentially.</p>
                 </div>
             </div>
             <nav>

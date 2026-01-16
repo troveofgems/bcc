@@ -212,6 +212,13 @@ export const ContactForm = () => {
                             <p className="text-muted-foreground text-sm">
                                 By clicking this checkbox, you agree to the terms and conditions.
                             </p>
+                            <Checkbox id="terms" className={"collapseBtn"}  />
+                            <Label htmlFor="terms">
+                                Cleaning Supplies & Tools Agreement
+                            </Label>
+                            <span>
+                                By clicking this checkbox, you agree to provide your own cleaning supplies and tools.
+                            </span>
                         </div>
                     </div>
 
