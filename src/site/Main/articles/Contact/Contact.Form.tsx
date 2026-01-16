@@ -212,8 +212,8 @@ export const ContactForm = () => {
                             <p className="text-muted-foreground text-sm">
                                 By clicking this checkbox, you agree to the terms and conditions.
                             </p>
-                            <Checkbox id="terms" className={"collapseBtn"}  />
-                            <Label htmlFor="terms">
+                            <Checkbox id="cleaning_supplies_agreement" className={"collapseBtn"}  />
+                            <Label htmlFor="cleaning_supplies_agreement">
                                 Cleaning Supplies & Tools Agreement
                             </Label>
                             <span>
