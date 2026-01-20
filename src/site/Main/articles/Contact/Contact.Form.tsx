@@ -199,13 +199,15 @@ export const ContactForm = () => {
     }
 
     const handleAcceptedTerms = ({ acceptedForm }: { acceptedForm: string }) => {
-
         if(acceptedForm === "toc") {
             setViewingToc(false);
             form.setValue("client_accepts_toc", true);
         } else if (acceptedForm === "csp") {
             setViewingCsp(false);
             form.setValue("client_accepts_cleaning_supplies_agreement", true);
+        } else {
+            setViewingToc(false);
+            setViewingCsp(false);
         }
     };
 

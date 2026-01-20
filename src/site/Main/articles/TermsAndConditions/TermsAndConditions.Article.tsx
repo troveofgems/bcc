@@ -15,7 +15,7 @@ import {Button} from "../../../../components/ui/button.tsx";
 export const TermsAndConditionsArticle = (
     {
         fromContactForm,
-        handleAcceptedTerms,
+        handleAcceptedTerms = () => {},
     }:
     {
         fromContactForm: boolean;
