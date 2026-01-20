@@ -1774,6 +1774,22 @@ label {
 	margin-bottom: 0;
 }
 
+.date_picker_calendar {
+	background: #000;
+	position: fixed;
+	top: -27rem;
+	right: -6rem;
+}
+
+.date_picker_calendar button {
+	display: flex!important;
+}
+
+.date_picker_calendar nav {
+	display: flex!important;
+}
+
+
 @media (max-width: 800px) {
 	.contact_description,
 	.about_description,
@@ -1787,5 +1803,4 @@ label {
 	.contact_form p {
 		text-align: start;
 	}
-
 }

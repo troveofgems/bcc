@@ -1,3 +1,4 @@
+import {useState} from "react";
 import "tailwindcss";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {useForm, type UseFormReturn, useWatch} from "react-hook-form";
@@ -13,6 +14,11 @@ import {
     FormMessage,
 } from "../../../../components/ui/form.tsx";
 import {
+    Popover,
+    PopoverContent,
+    PopoverTrigger,
+} from "../../../../components/ui/popover";
+import {
     Select,
     SelectContent,
     SelectItem,
@@ -23,10 +29,18 @@ import { Input } from "../../../../components/ui/input";
 import { Checkbox } from "../../../../components/ui/checkbox";
 import { Button } from "../../../../components/ui/button";
 import { RadioGroup, RadioGroupItem } from "../../../../components/ui/radio-group"
+import {Textarea} from "../../../../components/ui/textarea.tsx";
+import { Calendar } from "../../../../components/ui/calendar";
+import { format } from "date-fns";
+import {TermsAndConditionsArticle} from "../TermsAndConditions/TermsAndConditions.Article.tsx";
+import {CleaningSuppliesPolicyArticle} from "../CleaningSuppliesPolicy/CleaningSuppliesPolicy.Article.tsx";
 
 const formSchema = z.object({
     client_name: z.string().max(150, {
         message: "Client name must be no more than 150 characters.",
+    }),
+    client_requested_service_date: z.string().max(100, {
+        message: "Date cannot be more than 100 characters.",
     }),
     client_service_address: z.string().max(320, {
         message: "Client address must be no more than 320 characters.",
@@ -51,6 +65,9 @@ const formSchema = z.object({
     }),
     client_recurring_request_frequency: z.string().max(300, {
         message: "Please make a selection",
+    }),
+    client_additional_notes: z.string().max(500, {
+        message: "Additional Notes must not exceed 500 characters.",
     }),
     client_accepts_toc: z.boolean({ message: "You must accept the terms and conditions."}),
     client_accepts_cleaning_supplies_agreement: z.boolean({ message: "You must accept the Cleaning Supplies Policy."}),
@@ -109,10 +126,15 @@ function ConditionalSection_RecurrenceFrequency({ form }: { form: UseFormReturn<
 }
 
 export const ContactForm = () => {
-    const form = useForm<z.infer<typeof formSchema>>({
+    const
+        [viewingToc, setViewingToc] = useState(false),
+        [viewingCsp, setViewingCsp] = useState(false),
+        [formSubmitted, setFormSubmitted] = useState(false),
+        form = useForm<z.infer<typeof formSchema>>({
             resolver: zodResolver(formSchema),
             defaultValues: {
                 client_name: "",
+                client_requested_service_date: "",
                 client_contact_phone: "",
                 client_contact_email: "",
                 client_service_address: "",
@@ -136,10 +158,11 @@ export const ContactForm = () => {
                 },
                 client_requests_recurring_services: "yes_to_recurring_services",
                 client_recurring_request_frequency: "weekly",
+                client_additional_notes: "No notes provided.",
                 client_accepts_toc: false,
                 client_accepts_cleaning_supplies_agreement: false
             }
-    });
+        });
 
     const sendEmail = async (formData: FormData, values: z.infer<typeof formSchema>) => {
         //event.preventDefault();
@@ -170,11 +193,21 @@ export const ContactForm = () => {
 
             const data = await response.json();
             console.log(data);
-            //setResult(data.success ? "Success!" : "Error");
         } catch (err) {
             console.error("Email Send Failed...", err);
         }
     }
+
+    const handleAcceptedTerms = ({ acceptedForm }: { acceptedForm: string }) => {
+
+        if(acceptedForm === "toc") {
+            setViewingToc(false);
+            form.setValue("client_accepts_toc", true);
+        } else if (acceptedForm === "csp") {
+            setViewingCsp(false);
+            form.setValue("client_accepts_cleaning_supplies_agreement", true);
+        }
+    };
 
     const capitalizeFirstLetter = (string: string) => {
         if (string.length === 0) {
@@ -182,12 +215,11 @@ export const ContactForm = () => {
         }
         return string.charAt(0).toUpperCase() + string.slice(1);
     };
-
-    function getTrueKeysEntries(obj: object) {
+    const getTrueKeysEntries = (obj: object) => {
         return Object.entries(obj)
             .filter(([, value]) => value === true)
             .map(([key]) => capitalizeFirstLetter(key));
-    }
+    };
 
     function onSubmit(values: z.infer<typeof formSchema>) {
         console.log("Form Values? ", values);
@@ -204,17 +236,20 @@ export const ContactForm = () => {
 
         formData.append("client", `${values.client_name}\n${values.client_service_address}\n${values.client_contact_email} / ${values.client_contact_phone}`);
         formData.append("referral", `${values.client_referral_from}\n${values.client_referral_contact_email_or_phone}\n${values.client_referral_relationship}`);
+        formData.append("Requested Service Date", values.client_requested_service_date);
         formData.append("Recurring Services Requested", recurringServicesRequested);
         formData.append("Day Preferences", dayPreferences.join(", "));
         formData.append("Time Preferences", timePreferences.join(", ").replaceAll("_", " "));
+        formData.append("Additional Notes", values.client_additional_notes);
         formData.append("Client Acknowledged", "Terms and Conditions\nCleaning Supplies Policy");
 
         sendEmail(formData, values).then(() => {
             console.log("Called Send Email...");
+            setFormSubmitted(true);
         });
     }
 
-    return (
+    return !formSubmitted ? (
         <>
             <Form {...form}>
                 <form onSubmit={form.handleSubmit(onSubmit)} className={"fullWidth contact_form"}>
@@ -224,12 +259,51 @@ export const ContactForm = () => {
                         name={"client_name"}
                         render={({field}) => (
                             <FormItem itemID={"clientName"}>
-                                <FormLabel>Client Full Name</FormLabel>
+                                <FormLabel className={"label"}>Client Full Name</FormLabel>
                                 <FormControl>
                                     <Input {...field} placeholder="Full Name" type={"text"} />
                                 </FormControl>
                                 <FormDescription className={"input_description"}>
                                     This is your full name.
+                                </FormDescription>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+
+                    <FormField
+                        control={form.control}
+                        name={"client_requested_service_date"}
+                        render={({field}) => (
+                            <FormItem>
+                                <FormLabel className={"label"}>Tentative Service Date</FormLabel>
+                                <FormControl>
+                                    <Popover>
+                                        <PopoverTrigger asChild>
+                                            <Button
+                                                variant="outline"
+                                                data-empty={!field.value}
+                                                className="data-[empty=true]:text-muted-foreground font-normal"
+                                            >
+                                                {field.value ? format(field.value, "PPP") : <span>Pick a date</span>}
+                                            </Button>
+                                        </PopoverTrigger>
+                                        <PopoverContent>
+                                            <Calendar
+                                                mode="single"
+                                                selected={new Date(field.value)}
+                                                onSelect={(date) => {
+                                                    console.log("Date? ", date);
+                                                    field.onChange(`${date}`);
+                                                }}
+                                                defaultMonth={new Date()}
+                                                className={"date_picker_calendar"}
+                                            />
+                                        </PopoverContent>
+                                    </Popover>
+                                </FormControl>
+                                <FormDescription className={"input_description"}>
+                                    When would you like to schedule your cleaning service?
                                 </FormDescription>
                                 <FormMessage />
                             </FormItem>
@@ -608,13 +682,13 @@ export const ContactForm = () => {
                         </div>
                     </div>
 
-                    <h4 className={"major"}>Recurring Services</h4>
+                    <h4 className={"major addMarginTop"}>Recurring Services</h4>
                     <FormField
                         control={form.control}
                         name={"client_requests_recurring_services"}
                         render={({field}) => (
                             <FormItem>
-                                <FormLabel className={"smallPadBottom addPadTop"}>Would you like recurring services?</FormLabel>
+                                <FormLabel className={"smallPadBottom"}>Would you like recurring services?</FormLabel>
                                 <FormControl>
                                     <RadioGroup
                                         onValueChange={field.onChange}
@@ -635,7 +709,34 @@ export const ContactForm = () => {
                             </FormItem>
                         )}
                     />
-                    <ConditionalSection_RecurrenceFrequency form={form} />
+                    <div className={"addBottomMargin"}>
+                        <ConditionalSection_RecurrenceFrequency form={form} />
+                    </div>
+
+                    <h4 className={"major addMarginTop"}>Additional Notes</h4>
+                    <FormField
+                        control={form.control}
+                        name={"client_additional_notes"}
+                        render={({field}) => (
+                            <FormItem>
+                                <FormLabel className={"label smallPadBottom"}>Should we know anything else?</FormLabel>
+                                <div className={"flex flex-col gap-2"}>
+                                    <FormControl>
+                                        <Textarea
+                                            {...field}
+                                            value={field.value}
+                                            onChange={field.onChange}
+                                            placeholder="Type your message here."
+                                        />
+                                    </FormControl>
+                                    <FormDescription className={"label"}>
+                                        Additional Service Requests, Uniform Requests,...etc.
+                                    </FormDescription>
+                                </div>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
 
                     <h4 className={"major addMarginTop"}>Agreements</h4>
                     <FormField
@@ -643,18 +744,22 @@ export const ContactForm = () => {
                         name={"client_accepts_toc"}
                         render={({field}) => (
                             <FormItem>
-                                <FormLabel className={"smallPadBottom addPadTop"}>Accept terms and conditions</FormLabel>
-                                <div className={"flex flex-row justify-around"}>
+                                <FormLabel className={"smallPadBottom"}>Accept terms and conditions</FormLabel>
+                                <div className={"flex flex-row justify-start"}>
                                     <FormControl>
                                         <Checkbox
                                             onChange={field.onChange}
                                             checked={field.value === true}
                                             onCheckedChange={field.onChange}
-                                            disabled={field.value === true}
+                                            disabled={true}
                                         />
                                     </FormControl>
-                                    <FormDescription className={"smallPadLeft"}>
-                                        By clicking this checkbox, you agree to the terms and conditions.
+                                    <FormDescription className={"addLeftMargin"}>
+                                        <Button type={"button"} onClick={() => {
+                                        console.log("Toc was clicked!");
+                                        setViewingToc(true);
+                                        console.log("Past ToC?");
+                                    }}>terms and conditions</Button>.
                                     </FormDescription>
                                 </div>
                                 <FormMessage />
@@ -667,18 +772,20 @@ export const ContactForm = () => {
                         name={"client_accepts_cleaning_supplies_agreement"}
                         render={({field}) => (
                             <FormItem>
-                                <FormLabel className={"smallPadBottom addPadTop"}>Accept Cleaning Supplies Agreement</FormLabel>
-                                <div className={"flex flex-row justify-around"}>
+                                <FormLabel className={"smallPadBottom"}>Accept Cleaning Supplies Agreement</FormLabel>
+                                <div className={"flex flex-row justify-start"}>
                                     <FormControl>
                                         <Checkbox
                                             onChange={field.onChange}
                                             checked={field.value === true}
                                             onCheckedChange={field.onChange}
-                                            disabled={field.value === true}
+                                            disabled={true}
                                         />
                                     </FormControl>
-                                    <FormDescription className={"smallPadLeft"}>
-                                        By clicking this checkbox, you agree to the Cleaning Supplies Agreement.
+                                    <FormDescription className={""}>
+                                        <Button type={"button"} className={"addLeftMargin"} onClick={() => {
+                                        setViewingCsp(true);
+                                    }}>Cleaning Supplies Agreement</Button>.
                                     </FormDescription>
                                 </div>
                                 <FormMessage />
@@ -687,11 +794,32 @@ export const ContactForm = () => {
                     />
 
                     <div className={"flex justify-evenly paddingTopL"}>
-                        <Button type="submit" className={"primary"}>Send</Button>
                         <Button type="reset">Reset</Button>
+                        <Button type="submit" className={"primary"}>Send</Button>
                     </div>
                 </form>
             </Form>
+            {
+                viewingToc && (
+                    <TermsAndConditionsArticle fromContactForm={true} handleAcceptedTerms={handleAcceptedTerms} />
+                )
+            }
+            {
+                viewingCsp && (
+                    <CleaningSuppliesPolicyArticle fromContactForm={true} handleAcceptedTerms={handleAcceptedTerms} />
+                )
+            }
+        </>
+    ) : (
+        <>
+            <div>
+                Your request has been successfully submitted. You will hear back from Bare and Clean Co within
+                the next few business days. For any additional questions, you can send an email to
+                info@barecleanco.com
+            </div>
+            <div>
+                Thank you for your business!
+            </div>
         </>
     );
 };

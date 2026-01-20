@@ -8,22 +8,14 @@ import {
 import {
     ScrollArea
 } from "../../../../components/ui/scroll-area.tsx";
-import type {Dispatch, SetStateAction} from "react";
+import {useNavigate} from "react-router-dom";
 
-export const AboutArticle = (
-    {
-        viewingArticle,
-        closeViewingSection,
-    }:
-    {
-        viewingArticle: boolean;
-        closeViewingSection: Dispatch<SetStateAction<string>>;
-    }
-) => {
+export const AboutArticle = () => {
+    const navigate = useNavigate();
     return (
         <Dialog
-            open={viewingArticle}
-            onOpenChange={() => closeViewingSection("none")}
+            open={true}
+            onOpenChange={() => navigate("/")}
         >
             <DialogContent className={"dialogStyles"}>
                 <DialogHeader>

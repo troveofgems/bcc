@@ -1,42 +1,10 @@
-import {AboutArticle} from "./articles/About/About.Article.tsx";
-import {ContactArticle} from "./articles/Contact/Contact.Article.tsx";
-import {PricingArticle} from "./articles/Pricing/Pricing.Article.tsx";
-import {ServicesArticle} from "./articles/Services/Services.Article.tsx";
-import {TermsAndConditionsArticle} from "./articles/TermsAndConditions/TermsAndConditions.Article.tsx";
-import type {Dispatch, SetStateAction} from "react";
+"use client";
+import {Outlet} from "react-router-dom";
 
-export const MainSiteContent = (
-    {
-        viewingSection,
-        setViewingSection,
-    }:
-    {
-        viewingSection: string;
-        setViewingSection: Dispatch<SetStateAction<string>>
-    }
-) => {
+export const MainSiteContent = () => {
     return (
         <div id={"main"}>
-            <ServicesArticle
-                viewingArticle={viewingSection === "Services"}
-                closeViewingSection={setViewingSection}
-            />
-            <PricingArticle
-                viewingArticle={viewingSection === "Pricing"}
-                closeViewingSection={setViewingSection}
-            />
-            <ContactArticle
-                viewingArticle={viewingSection === "Contact"}
-                closeViewingSection={setViewingSection}
-            />
-            <AboutArticle
-                viewingArticle={viewingSection === "About"}
-                closeViewingSection={setViewingSection}
-            />
-            <TermsAndConditionsArticle
-                viewingArticle={viewingSection === "TermsAndConditions"}
-                closeViewingSection={setViewingSection}
-            />
+            <Outlet />
         </div>
     )
 };

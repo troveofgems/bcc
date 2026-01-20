@@ -1,21 +1,15 @@
-import type {Dispatch, SetStateAction} from "react";
+import {Link} from "react-router-dom";
 
-export const Footer = (
-    {
-        setViewingSection,
-    }:
-    {
-        setViewingSection: Dispatch<SetStateAction<string>>
-    }
-) => (
+export const Footer = () => (
     <footer id="footer">
         <p className="copyright">
             Bare & Clean Co. - 2026
         </p>
-        <p>
-            <a href={"#"} onClick={() => setViewingSection("TermsAndConditions")} className={"copyright"}>Terms and Conditions</a>
-        </p>
-        <p className={"copyright"}>
+        <div className={"flex flex-col items-center"}>
+            <Link to={"/termsAndConditions"} className={"copyright w-fit"}>Terms and Conditions</Link>
+            <Link to={"/cleaningSuppliesPolicy"} className={"copyright w-fit"}>Cleaning Supplies Policy</Link>
+        </div>
+        <p className={"copyright addMarginTop"}>
             Site Facilitator: <a href="https://thetroveofgems.tech" target={"_blank"} referrerPolicy={"no-referrer"}>ToG</a>.
         </p>
     </footer>

@@ -1,16 +1,9 @@
 import '@assets/css/fontawesome-all.min.css';
 import '@assets/css/main.css';
 import '@assets/css/noscript.css';
-import type {Dispatch, SetStateAction} from "react";
+import {Link} from "react-router-dom";
 
-export const Header = (
-    {
-        setViewingSection,
-    }:
-    {
-        setViewingSection: Dispatch<SetStateAction<string>>
-    }
-) => {
+export const Header = () => {
     return (
         <header id={"header"}>
             <div className="logo">
@@ -25,16 +18,16 @@ export const Header = (
             <nav>
                 <ul>
                     <li>
-                        <a href="#" onClick={() => setViewingSection("Services")}>Services</a>
+                        <Link to="/services">Services</Link>
                     </li>
                     <li>
-                        <a href="#" onClick={() => setViewingSection("Pricing")}>Pricing</a>
+                        <Link to="/pricing">Pricing</Link>
                     </li>
                     <li>
-                        <a href="#" onClick={() => setViewingSection("Contact")}>Contact</a>
+                        <Link to="/contact">Contact</Link>
                     </li>
                     <li>
-                        <a href="#" onClick={() => setViewingSection("About")}>About</a>
+                        <Link to="/about">About</Link>
                     </li>
                 </ul>
             </nav>

@@ -5,24 +5,16 @@ import {
     DialogHeader,
     DialogTitle
 } from "../../../../components/ui/dialog.tsx";
-import type {Dispatch, SetStateAction} from "react";
 import {
     ScrollArea
 } from "../../../../components/ui/scroll-area.tsx";
 import {ContactForm} from "./Contact.Form.tsx";
+import {useNavigate} from "react-router-dom";
 
-export const ContactArticle = (
-    {
-        viewingArticle,
-        closeViewingSection,
-    }:
-    {
-        viewingArticle: boolean;
-        closeViewingSection: Dispatch<SetStateAction<string>>;
-    }
-) => {
+export const ContactArticle = () => {
+    const navigate = useNavigate();
     return (
-        <Dialog open={viewingArticle} modal={true} onOpenChange={() => closeViewingSection("none")}>
+        <Dialog open={true} modal={true} onOpenChange={() => navigate("/")}>
             <DialogContent className={"dialogStyles"}>
                 <DialogHeader>
                     <DialogTitle className="major">

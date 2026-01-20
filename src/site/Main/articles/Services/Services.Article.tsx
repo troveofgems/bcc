@@ -1,3 +1,5 @@
+"use client";
+import {useNavigate} from "react-router-dom";
 import {
     Dialog,
     DialogContent,
@@ -8,22 +10,13 @@ import {
 import {
     ScrollArea
 } from "../../../../components/ui/scroll-area.tsx";
-import type {Dispatch, SetStateAction} from "react";
 
 import Image2 from "../../../../images/pic02.jpg";
 
-export const ServicesArticle = (
-    {
-        viewingArticle,
-        closeViewingSection,
-    }:
-    {
-        viewingArticle: boolean;
-        closeViewingSection: Dispatch<SetStateAction<string>>;
-    }
-) => {
+export const ServicesArticle = () => {
+    const navigate = useNavigate();
     return (
-        <Dialog open={viewingArticle} modal={true} onOpenChange={() => closeViewingSection("none")}>
+        <Dialog modal={true} open={true} onOpenChange={() => navigate("/")}>
             <DialogContent className={"dialogStyles"}>
                 <DialogHeader>
                     <DialogTitle className={"major"}>

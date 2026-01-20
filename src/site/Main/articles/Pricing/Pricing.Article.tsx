@@ -5,25 +5,17 @@ import {
     DialogHeader,
     DialogTitle
 } from "../../../../components/ui/dialog.tsx";
-import type {Dispatch, SetStateAction} from "react";
 import {
     ScrollArea
 } from "../../../../components/ui/scroll-area.tsx";
 
 import Image1 from "../../../../images/pic01.jpg";
+import {useNavigate} from "react-router-dom";
 
-export const PricingArticle = (
-    {
-        viewingArticle,
-        closeViewingSection,
-    }:
-    {
-        viewingArticle: boolean;
-        closeViewingSection: Dispatch<SetStateAction<string>>;
-    }
-) => {
+export const PricingArticle = () => {
+    const navigate = useNavigate();
     return (
-        <Dialog open={viewingArticle} modal={true} onOpenChange={() => closeViewingSection("none")}>
+        <Dialog open={true} modal={true} onOpenChange={() => navigate("/")}>
             <DialogContent className={"dialogStyles"}>
                 <DialogHeader>
                     <DialogTitle className={"major"}>
@@ -76,8 +68,3 @@ export const PricingArticle = (
         </Dialog>
     )
 }
-
-/*
-<article id="pricing">
-
-</article>*/
