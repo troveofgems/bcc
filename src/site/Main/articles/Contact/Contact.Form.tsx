@@ -757,7 +757,10 @@ export const ContactForm = () => {
                                         />
                                     </FormControl>
                                     <FormDescription className={"addLeftMargin"}>
-                                        <Button type={"button"} onClick={() => {
+                                        <Button
+                                            className={"smBtn"}
+                                            type={"button"}
+                                            onClick={() => {
                                         console.log("Toc was clicked!");
                                         setViewingToc(true);
                                         console.log("Past ToC?");
@@ -785,9 +788,9 @@ export const ContactForm = () => {
                                         />
                                     </FormControl>
                                     <FormDescription className={""}>
-                                        <Button type={"button"} className={"addLeftMargin"} onClick={() => {
+                                        <Button type={"button"} className={"addLeftMargin smBtn"} onClick={() => {
                                         setViewingCsp(true);
-                                    }}>Cleaning Supplies Agreement</Button>.
+                                    }}>Cleaning Supplies Agreement</Button>
                                     </FormDescription>
                                 </div>
                                 <FormMessage />
