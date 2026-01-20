@@ -465,7 +465,8 @@ input, select, textarea {
 	}
 
 	input[type="checkbox"],
-	input[type="radio"] {
+	input[type="radio"],
+	.radio {
 		-moz-appearance: none;
 		-webkit-appearance: none;
 		-ms-appearance: none;
@@ -479,7 +480,8 @@ input, select, textarea {
 	}
 
 		input[type="checkbox"] + label,
-		input[type="radio"] + label {
+		input[type="radio"] + label,
+		.radio + label {
 			text-decoration: none;
 			-moz-user-select: none;
 			-webkit-user-select: none;
@@ -497,7 +499,8 @@ input, select, textarea {
 		}
 
 			input[type="checkbox"] + label:before,
-			input[type="radio"] + label:before {
+			input[type="radio"] + label:before,
+			.radio + label:before {
 				-moz-osx-font-smoothing: grayscale;
 				-webkit-font-smoothing: antialiased;
 				display: inline-block;
@@ -511,7 +514,8 @@ input, select, textarea {
 			}
 
 			input[type="checkbox"] + label:before,
-			input[type="radio"] + label:before {
+			input[type="radio"] + label:before,
+			.radio + label:before {
 				-moz-transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out, background-color 0.2s ease-in-out;
 				-webkit-transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out, background-color 0.2s ease-in-out;
 				-ms-transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out, background-color 0.2s ease-in-out;
@@ -530,7 +534,8 @@ input, select, textarea {
 			}
 
 		input[type="checkbox"]:checked + label:before,
-		input[type="radio"]:checked + label:before {
+		input[type="radio"]:checked + label:before,
+		.radio:checked + label:before {
 			background: #ffffff !important;
 			border-color: #ffffff !important;
 			color: #1b1f22;
@@ -538,7 +543,8 @@ input, select, textarea {
 		}
 
 		input[type="checkbox"]:focus + label:before,
-		input[type="radio"]:focus + label:before {
+		input[type="radio"]:focus + label:before,
+		.radio:focus + label:before {
 			background: rgba(255, 255, 255, 0.075);
 			border-color: #ffffff;
 			box-shadow: 0 0 0 1px #ffffff;
@@ -548,7 +554,8 @@ input, select, textarea {
 		border-radius: 4px;
 	}
 
-	input[type="radio"] + label:before {
+	input[type="radio"] + label:before,
+	.radio + label:before {
 		border-radius: 100%;
 	}
 
@@ -1681,6 +1688,10 @@ input, select, textarea {
 	margin-top: 2rem;
 }
 
+.addPadBottom {
+	padding-bottom: 2rem;
+}
+
 .addPadTopLarge {
 	margin-top: 4rem;
 }
@@ -1719,6 +1730,50 @@ input, select, textarea {
 	color: #fff;
 }
 
+.smallPadLeft {
+	padding-left: .75rem;
+}
+
+.radioOverride {
+	border-radius: 100%;
+	display: flex;
+	align-items: center;
+	background: rgba(128, 0, 128, 0.85);
+	border-color: #000 !important;
+/*
+	*/
+	color: #fff !important;
+	content: '\f00c';
+}
+
+.addLeftMargin {
+	margin-left: 1rem;
+}
+
+.addMarginTop {
+	margin-top: 2rem;
+}
+
+.addMarginRight {
+	margin-right: 1rem;
+}
+
+.addMarginBottom {
+	margin-bottom: 1rem;
+}
+
+.addSmallRightMargin {
+	margin-right: .5rem;
+}
+
+label {
+	padding-top: 1rem;
+}
+
+.label {
+	margin-bottom: 0;
+}
+
 @media (max-width: 800px) {
 	.contact_description,
 	.about_description,
@@ -1732,4 +1787,5 @@ input, select, textarea {
 	.contact_form p {
 		text-align: start;
 	}
+
 }

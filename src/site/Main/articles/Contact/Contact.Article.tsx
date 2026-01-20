@@ -31,11 +31,11 @@ export const ContactArticle = (
                     <DialogDescription className={"contact_description"}>
                         Bare & Clean Co. accepts new clients by referral only to maintain discretion, consistency, and
                         service standards.
-                        <ScrollArea className="h-72 rounded-md border paddingTopL">
-                            <ContactForm />
-                        </ScrollArea>
                     </DialogDescription>
                 </DialogHeader>
+                <ScrollArea className="h-72 rounded-md border paddingTopL">
+                    <ContactForm key={"contact_form"} />
+                </ScrollArea>
             </DialogContent>
         </Dialog>
     )
