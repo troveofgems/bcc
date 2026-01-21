@@ -1789,6 +1789,35 @@ label {
 	display: flex!important;
 }
 
+[data-slot="form-message"] {
+	font-size: .75rem;
+	font-weight: bold;
+	color: red;
+	padding-bottom: 0;
+	margin-bottom: 0.5rem;
+}
+
+[data-slot="form-description"],
+.input_description {
+	padding-bottom: 0;
+	margin-bottom: 0;
+}
+
+[data-slot="marked_required"] {
+	font-size: .75rem;
+	letter-spacing: 0;
+	color: red;
+}
+
+/*Form Spacers*/
+.section_spacer {
+	margin-top: 1rem;
+}
+
+.section_spacer_2 {
+	margin-top: 2rem;
+}
+
 @media (max-width: 800px) {
 	.contact_description,
 	.about_description,

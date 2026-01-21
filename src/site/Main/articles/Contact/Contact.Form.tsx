@@ -36,42 +36,69 @@ import {TermsAndConditionsArticle} from "../TermsAndConditions/TermsAndCondition
 import {CleaningSuppliesPolicyArticle} from "../CleaningSuppliesPolicy/CleaningSuppliesPolicy.Article.tsx";
 
 const formSchema = z.object({
-    client_name: z.string().max(150, {
-        message: "Client name must be no more than 150 characters.",
+    client_name: z
+        .string()
+        .min(1, {message: "Your name cannot be blank."})
+        .max(150, {
+        message: "Your name must be no more than 150 characters.",
     }),
-    client_requested_service_date: z.string().max(100, {
+    client_requested_service_date: z
+        .string()
+        .max(100, {
         message: "Date cannot be more than 100 characters.",
     }),
-    client_service_address: z.string().max(320, {
-        message: "Client address must be no more than 320 characters.",
+    client_service_address: z
+        .string()
+        .min(25, {message: "Your address cannot be blank."})
+        .max(320, {
+        message: "Your address must be no more than 320 characters.",
     }),
-    client_contact_phone: z.string().max(12, {
-        message: "Client phone must be no more than 12 characters.",
+    client_contact_phone: z
+        .string()
+        .min(1, {message: "Your phone cannot be blank."})
+        .max(12, {
+        message: "Your phone must be no more than 12 characters.",
     }),
-    client_contact_email: z.string().max(300, {
-        message: "Client email must be no more than 300 characters."
+    client_contact_email: z
+        .email({ message: "Your email cannot be blank." })
+        .max(300, {
+        message: "Your email must be no more than 300 characters."
     }),
-    client_referral_relationship: z.string().max(300, {
-        message: "Client email must be no more than 300 characters."
+    client_referral_relationship: z
+        .string()
+        .min(1, {message: "Referral relationship cannot be blank."})
+        .max(300, {
+        message: "Client relationship must be no more than 300 characters."
     }),
-    client_referral_from: z.string().max(150, {
+    client_referral_from: z
+        .string()
+        .min(1, {message: "Referral name cannot be blank."})
+        .max(150, {
         message: "Client name must be no more than 150 characters.",
     }),
-    client_referral_contact_email_or_phone: z.string().max(300, {
+    client_referral_contact_email_or_phone: z
+        .string()
+        .min(1, {message: "Referral contact cannot be blank."})
+        .max(300, {
         message: "Client name must be no more than 300 characters.",
     }),
-    client_requests_recurring_services: z.string().max(25, {
+    client_requests_recurring_services: z
+        .string()
+        .max(25, {
         message: "Please make a selection",
     }),
-    client_recurring_request_frequency: z.string().max(300, {
+    client_recurring_request_frequency: z
+        .string()
+        .max(300, {
         message: "Please make a selection",
     }),
-    client_additional_notes: z.string().max(500, {
+    client_additional_notes: z
+        .string()
+        .max(500, {
         message: "Additional Notes must not exceed 500 characters.",
     }),
-    client_accepts_toc: z.boolean({ message: "You must accept the terms and conditions."}),
-    client_accepts_cleaning_supplies_agreement: z.boolean({ message: "You must accept the Cleaning Supplies Policy."}),
-    client_scheduling_day_preferences: z.object({
+    client_scheduling_day_preferences: z
+        .object({
         monday: z.boolean(),
         tuesday: z.boolean(),
         wednesday: z.boolean(),
@@ -80,14 +107,22 @@ const formSchema = z.object({
         saturday: z.boolean(),
         sunday: z.boolean(),
     }),
-    client_scheduling_time_preferences: z.object({
+    client_scheduling_time_preferences: z
+        .object({
         morning: z.boolean(),
         early_afternoon: z.boolean(),
         late_afternoon: z.boolean(),
         evening: z.boolean(),
     }),
+    client_accepts_toc: z
+        .boolean()
+        .refine((val) => val === true, { message: "You must accept the terms and conditions."}),
+    client_accepts_cleaning_supplies_agreement: z
+        .boolean({ message: "You must accept the Cleaning Supplies Policy."})
+        .refine((val) => val === true, { message: "You must accept the cleaning supplies policy."}),
 });
 
+const MarkedRequired = () => <span data-slot={"marked_required"}>* Required</span>;
 function ConditionalSection_RecurrenceFrequency({ form }: { form: UseFormReturn<z.infer<typeof formSchema>> }) {
     const showSection = useWatch({
         control: form.control,
@@ -100,8 +135,8 @@ function ConditionalSection_RecurrenceFrequency({ form }: { form: UseFormReturn<
             control={form.control}
             name={"client_recurring_request_frequency"}
             render={({field}) => (
-                <FormItem className={"addPad"}>
-                    <FormLabel className={"smallPadBottom"}>At What Frequency?</FormLabel>
+                <FormItem className={"section_spacer"}>
+                    <FormLabel className={"smallPadBottom"}>At What Frequency? {<MarkedRequired />}</FormLabel>
                     <FormDescription className={"hidden"}>
                         Would you like Recurring Services?
                     </FormDescription>
@@ -255,328 +290,172 @@ export const ContactForm = () => {
         <>
             <Form {...form}>
                 <form onSubmit={form.handleSubmit(onSubmit)} className={"fullWidth contact_form"}>
-                    <h4 className={"major"}>Client Info</h4>
-                    <FormField
-                        control={form.control}
-                        name={"client_name"}
-                        render={({field}) => (
-                            <FormItem itemID={"clientName"}>
-                                <FormLabel className={"label"}>Client Full Name</FormLabel>
-                                <FormControl>
-                                    <Input {...field} placeholder="Full Name" type={"text"} />
-                                </FormControl>
-                                <FormDescription className={"input_description"}>
-                                    This is your full name.
-                                </FormDescription>
-                                <FormMessage />
-                            </FormItem>
-                        )}
-                    />
+                    <div id={"client_section"}>
+                        <h4 className={"major"}>Client Info</h4>
+                        <FormField
+                            control={form.control}
+                            name={"client_name"}
+                            render={({field}) => (
+                                <FormItem itemID={"clientName"}>
+                                    <FormLabel className={"label"}>Client Full Name {<MarkedRequired />}</FormLabel>
+                                    <FormControl>
+                                        <Input {...field} placeholder="Full Name" type={"text"} />
+                                    </FormControl>
+                                    <div className={"flex flex-row justify-between items-baseline"}>
+                                        <FormDescription className={"input_description"}>
+                                            This is your full name.
+                                        </FormDescription>
+                                        <FormMessage />
+                                    </div>
 
-                    <FormField
-                        control={form.control}
-                        name={"client_requested_service_date"}
-                        render={({field}) => (
-                            <FormItem>
-                                <FormLabel className={"label"}>Tentative Service Date</FormLabel>
-                                <FormControl>
-                                    <Popover>
-                                        <PopoverTrigger asChild>
-                                            <Button
-                                                variant="outline"
-                                                data-empty={!field.value}
-                                                className="data-[empty=true]:text-muted-foreground font-normal"
-                                            >
-                                                {field.value ? format(field.value, "PPP") : <span>Pick a date</span>}
-                                            </Button>
-                                        </PopoverTrigger>
-                                        <PopoverContent>
-                                            <Calendar
-                                                mode="single"
-                                                selected={new Date(field.value)}
-                                                onSelect={(date) => {
-                                                    console.log("Date? ", date);
-                                                    field.onChange(`${date}`);
-                                                }}
-                                                defaultMonth={new Date()}
-                                                className={"date_picker_calendar"}
-                                            />
-                                        </PopoverContent>
-                                    </Popover>
-                                </FormControl>
-                                <FormDescription className={"input_description"}>
-                                    When would you like to schedule your cleaning service?
-                                </FormDescription>
-                                <FormMessage />
-                            </FormItem>
-                        )}
-                    />
-                    <FormField
-                        control={form.control}
-                        name={"client_service_address"}
-                        render={({field}) => (
-                            <FormItem>
-                                <FormLabel className={"label"}>Service Address</FormLabel>
-                                <Input placeholder="123 Main Street, Phoenix AZ 85245" type={"text"} {...field} />
-                                <FormDescription>
-                                    This is the requested service address.
-                                </FormDescription>
-                                <FormMessage />
-                            </FormItem>
-                        )}
-                    />
-                    <FormField
-                        control={form.control}
-                        name={"client_contact_email"}
-                        render={({field}) => (
-                            <FormItem>
-                                <FormLabel className={"label"}>Email</FormLabel>
-                                <Input placeholder="terry@gmail.com" type={"text"} {...field} />
-                                <FormDescription>
-                                    This is your email address.
-                                </FormDescription>
-                                <FormMessage />
-                            </FormItem>
-                        )}
-                    />
-                    <FormField
-                        control={form.control}
-                        name={"client_contact_phone"}
-                        render={({field}) => (
-                            <FormItem>
-                                <FormLabel className={"label"}>Phone</FormLabel>
-                                <Input placeholder="+1 (480) 000-0000" type={"text"} {...field} />
-                                <FormDescription>
-                                    This is your contact phone number.
-                                </FormDescription>
-                                <FormMessage />
-                            </FormItem>
-                        )}
-                    />
-                    <h4 className={"major"}>Referral Info</h4>
-                    <FormField
-                        control={form.control}
-                        name={"client_referral_from"}
-                        render={({field}) => (
-                            <FormItem>
-                                <FormLabel className={"label"}>Referred By</FormLabel>
-                                <Input placeholder="John Smith" type={"text"} {...field} />
-                                <FormDescription>
-                                    This is who referred you to this service.
-                                </FormDescription>
-                                <FormMessage />
-                            </FormItem>
-                        )}
-                    />
-                    <FormField
-                        control={form.control}
-                        name={"client_referral_contact_email_or_phone"}
-                        render={({field}) => (
-                            <FormItem>
-                                <FormLabel className={"label"}>Referral Contact Number or Email</FormLabel>
-                                <Input placeholder="Phone" type={"text"} {...field} />
-                                <FormDescription>
-                                    Please provide their phone number or email.
-                                </FormDescription>
-                                <FormMessage />
-                            </FormItem>
-                        )}
-                    />
-                    <FormField
-                        control={form.control}
-                        name={"client_referral_relationship"}
-                        render={({field}) => (
-                            <FormItem>
-                                <FormLabel className={"label"}>Relationship to the Referral</FormLabel>
-                                <Input placeholder="Spouse" type={"text"} {...field} />
-                                <FormDescription>
-                                    What is your relationship to the person who referred you to this service?
-                                </FormDescription>
-                                <FormMessage />
-                            </FormItem>
-                        )}
-                    />
-                    <h4 className={"major addMarginBottom"}>Scheduling Preferences</h4>
-                    <FormLabel>Preferred Days</FormLabel>
-                    <div className="flex flex-col addMarginBottom">
-                        <div className={"flex flex-row flex-wrap gap-6 addMarginBottom"}>
-                            <FormField
-                                control={form.control}
-                                name={"client_scheduling_day_preferences.monday"}
-                                render={({field}) => (
-                                    <FormItem>
-                                        <div className="flex flex-col">
-                                            <div className="flex flex-col flex-wrap">
-                                                <div className={"flex flex-row flex-wrap justify-start"}>
-                                                    <div className={"flex flex-row items-center place-items-start"}>
-                                                        <Checkbox
-                                                            name={"monday"}
-                                                            aria-label={"Monday"}
-                                                            onCheckedChange={field.onChange}
-                                                            className={"addSmallRightMargin"}
-                                                        />
-                                                        <span>Monday</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                                </FormItem>
+                            )}
+                        />
+                        <FormField
+                            control={form.control}
+                            name={"client_service_address"}
+                            render={({field}) => (
+                                <FormItem className={"section_spacer"}>
+                                    <FormLabel className={"label"}>Service Address  {<MarkedRequired />}</FormLabel>
+                                    <Input placeholder="123 Main Street, Phoenix AZ 85245" type={"text"} {...field} />
+                                    <div className={"flex flex-row justify-between items-baseline"}>
+                                        <FormDescription>
+                                            This is the requested service address.
+                                        </FormDescription>
                                         <FormMessage />
-                                    </FormItem>
-                                )}
-                            />
-                            <FormField
-                                control={form.control}
-                                name={"client_scheduling_day_preferences.tuesday"}
-                                render={({field}) => (
-                                    <FormItem>
-                                        <div className="flex flex-col">
-                                            <div className="flex flex-col flex-wrap">
-                                                <div className={"flex flex-row flex-wrap justify-start"}>
-                                                    <div className={"flex flex-row items-center place-items-start"}>
-                                                        <Checkbox
-                                                            name={"tuesday"}
-                                                            aria-label={"Tuesday"}
-                                                            onCheckedChange={field.onChange}
-                                                            className={"addSmallRightMargin"}
-                                                        />
-                                                        Tuesday
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                                    </div>
+                                </FormItem>
+                            )}
+                        />
+                        <FormField
+                            control={form.control}
+                            name={"client_contact_email"}
+                            render={({field}) => (
+                                <FormItem className={"section_spacer"}>
+                                    <FormLabel className={"label"}>Email  {<MarkedRequired />}</FormLabel>
+                                    <Input placeholder="terry@gmail.com" type={"text"} {...field} />
+                                    <div className={"flex flex-row justify-between items-baseline"}>
+                                        <FormDescription>
+                                            This is your email address.
+                                        </FormDescription>
                                         <FormMessage />
-                                    </FormItem>
-                                )}
-                            />
-                            <FormField
-                                control={form.control}
-                                name={"client_scheduling_day_preferences.wednesday"}
-                                render={({field}) => (
-                                    <FormItem>
-                                        <div className="flex flex-col">
-                                            <div className="flex flex-col flex-wrap">
-                                                <div className={"flex flex-row flex-wrap justify-start"}>
-                                                    <div className={"flex flex-row items-center place-items-start"}>
-                                                        <Checkbox
-                                                            name={"wednesday"}
-                                                            aria-label={"Wednesday"}
-                                                            onCheckedChange={field.onChange}
-                                                            className={"addSmallRightMargin"}
-                                                        />
-                                                        Wednesday
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                                    </div>
+                                </FormItem>
+                            )}
+                        />
+                        <FormField
+                            control={form.control}
+                            name={"client_contact_phone"}
+                            render={({field}) => (
+                                <FormItem className={"section_spacer"}>
+                                    <FormLabel className={"label"}>Phone {<MarkedRequired />}</FormLabel>
+                                    <Input placeholder="+1 (480) 000-0000" type={"text"} {...field} />
+                                    <div className={"flex flex-row justify-between items-baseline"}>
+                                        <FormDescription>
+                                            This is your contact phone number.
+                                        </FormDescription>
                                         <FormMessage />
-                                    </FormItem>
-                                )}
-                            />
-                            <FormField
-                                control={form.control}
-                                name={"client_scheduling_day_preferences.thursday"}
-                                render={({field}) => (
-                                    <FormItem>
-                                        <div className="flex flex-col">
-                                            <div className="flex flex-col flex-wrap">
-                                                <div className={"flex flex-row flex-wrap justify-start"}>
-                                                    <div className={"flex flex-row items-center place-items-start"}>
-                                                        <Checkbox
-                                                            name={"thursday"}
-                                                            aria-label={"Thursday"}
-                                                            className={"addSmallRightMargin"}
-                                                            onCheckedChange={field.onChange}
-                                                        />
-                                                        Thursday
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <FormMessage />
-                                    </FormItem>
-                                )}
-                            />
-                            <FormField
-                                control={form.control}
-                                name={"client_scheduling_day_preferences.friday"}
-                                render={({field}) => (
-                                    <FormItem>
-                                        <div className="flex flex-col">
-                                            <div className="flex flex-col flex-wrap">
-                                                <div className={"flex flex-row flex-wrap justify-start"}>
-                                                    <div className={"flex flex-row items-center place-items-start"}>
-                                                        <Checkbox
-                                                            name={"friday"}
-                                                            aria-label={"Friday"}
-                                                            className={"addSmallRightMargin"}
-                                                            onCheckedChange={field.onChange}
-                                                        />
-                                                        Friday
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <FormMessage />
-                                    </FormItem>
-                                )}
-                            />
-                            <FormField
-                                control={form.control}
-                                name={"client_scheduling_day_preferences.saturday"}
-                                render={({field}) => (
-                                    <FormItem>
-                                        <div className="flex flex-col">
-                                            <div className="flex flex-col flex-wrap">
-                                                <div className={"flex flex-row flex-wrap justify-start"}>
-                                                    <div className={"flex flex-row items-center place-items-start"}>
-                                                        <Checkbox
-                                                            name={"saturday"}
-                                                            aria-label={"Saturday"}
-                                                            className={"addSmallRightMargin"}
-                                                            onCheckedChange={field.onChange}
-                                                        />
-                                                        Saturday
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <FormMessage />
-                                    </FormItem>
-                                )}
-                            />
-                            <FormField
-                                control={form.control}
-                                name={"client_scheduling_day_preferences.sunday"}
-                                render={({field}) => (
-                                    <FormItem>
-                                        <div className="flex flex-col">
-                                            <div className="flex flex-col flex-wrap">
-                                                <div className={"flex flex-row flex-wrap justify-around"}>
-                                                    <div className={"flex flex-row items-center place-items-start"}>
-                                                        <Checkbox
-                                                            name={"sunday"}
-                                                            aria-label={"Sunday"}
-                                                            className={"addSmallRightMargin"}
-                                                            onCheckedChange={field.onChange}
-                                                        />
-                                                        Sunday
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <FormMessage />
-                                    </FormItem>
-                                )}
-                            />
-                        </div>
+                                    </div>
+                                </FormItem>
+                            )}
+                        />
+                        <FormField
+                            control={form.control}
+                            name={"client_requested_service_date"}
+                            render={({field}) => (
+                                <FormItem className={"section_spacer"}>
+                                    <FormLabel className={"label"}>Tentative Service Date</FormLabel>
+                                    <FormControl>
+                                        <Popover>
+                                            <PopoverTrigger asChild>
+                                                <Button
+                                                    variant="outline"
+                                                    data-empty={!field.value}
+                                                    className="data-[empty=true]:text-muted-foreground font-normal"
+                                                >
+                                                    {field.value ? format(field.value, "PPP") : <span>Pick a date</span>}
+                                                </Button>
+                                            </PopoverTrigger>
+                                            <PopoverContent>
+                                                <Calendar
+                                                    mode="single"
+                                                    selected={new Date(field.value)}
+                                                    onSelect={(date) => {
+                                                        field.onChange(`${date}`);
+                                                    }}
+                                                    defaultMonth={new Date()}
+                                                    className={"date_picker_calendar"}
+                                                />
+                                            </PopoverContent>
+                                        </Popover>
+                                    </FormControl>
+                                    <FormDescription className={"input_description"}>
+                                        When would you like to schedule your cleaning service?
+                                    </FormDescription>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
                     </div>
-                    <FormLabel>Preferred Times</FormLabel>
-                    <div className="flex flex-col addMarginBottom">
-                        <div className={"flex flex-row flex-wrap gap-3 addMarginBottom justify-start"}>
-                            <div className={"flex gap-3"}>
+                    <div id={"referral_section"} className={"section_spacer_2"}>
+                        <h4 className={"major"}>Referral Info</h4>
+                        <FormField
+                            control={form.control}
+                            name={"client_referral_from"}
+                            render={({field}) => (
+                                <FormItem>
+                                    <FormLabel className={"label"}>Referred By {<MarkedRequired />}</FormLabel>
+                                    <Input placeholder="John Smith" type={"text"} {...field} />
+                                    <div className={"flex flex-row justify-between items-baseline"}>
+                                        <FormDescription>
+                                            Who referred you here?
+                                        </FormDescription>
+                                        <FormMessage />
+                                    </div>
+                                </FormItem>
+                            )}
+                        />
+                        <FormField
+                            control={form.control}
+                            name={"client_referral_contact_email_or_phone"}
+                            render={({field}) => (
+                                <FormItem>
+                                    <FormLabel className={"label"}>Referral Contact {<MarkedRequired />}</FormLabel>
+                                    <Input placeholder="Phone" type={"text"} {...field} />
+                                    <div className={"flex flex-row justify-between items-baseline"}>
+                                        <FormDescription>
+                                            Referral's email or phone.
+                                        </FormDescription>
+                                        <FormMessage />
+                                    </div>
+                                </FormItem>
+                            )}
+                        />
+                        <FormField
+                            control={form.control}
+                            name={"client_referral_relationship"}
+                            render={({field}) => (
+                                <FormItem>
+                                    <FormLabel className={"label"}>Relationship {<MarkedRequired />}</FormLabel>
+                                    <Input placeholder="Spouse" type={"text"} {...field} />
+                                    <div className={"flex flex-row justify-between items-baseline"}>
+                                        <FormDescription>
+                                            Relationship to the Referral?
+                                        </FormDescription>
+                                        <FormMessage />
+                                    </div>
+                                </FormItem>
+                            )}
+                        />
+                    </div>
+                    <div id={"scheduling_preferences_section"} className={"section_spacer_2"}>
+                        <h4 className={"major addMarginBottom"}>Scheduling Preferences</h4>
+                        <FormLabel>Preferred Days {<MarkedRequired />}</FormLabel>
+                        <div className="flex flex-col addMarginBottom">
+                            <div className={"flex flex-row flex-wrap gap-6 addMarginBottom"}>
                                 <FormField
                                     control={form.control}
-                                    name={"client_scheduling_time_preferences.early_afternoon"}
+                                    name={"client_scheduling_day_preferences.monday"}
                                     render={({field}) => (
                                         <FormItem>
                                             <div className="flex flex-col">
@@ -584,14 +463,12 @@ export const ContactForm = () => {
                                                     <div className={"flex flex-row flex-wrap justify-start"}>
                                                         <div className={"flex flex-row items-center place-items-start"}>
                                                             <Checkbox
-                                                                name={"early_afternoon"}
-                                                                aria-label={"Early Afternoon"}
-                                                                className={"addSmallRightMargin"}
-                                                                onChange={field.onChange}
-                                                                checked={field.value === true}
+                                                                name={"monday"}
+                                                                aria-label={"Monday"}
                                                                 onCheckedChange={field.onChange}
+                                                                className={"addSmallRightMargin"}
                                                             />
-                                                            Early Afternoon
+                                                            <span>Monday</span>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -602,7 +479,7 @@ export const ContactForm = () => {
                                 />
                                 <FormField
                                     control={form.control}
-                                    name={"client_scheduling_time_preferences.late_afternoon"}
+                                    name={"client_scheduling_day_preferences.tuesday"}
                                     render={({field}) => (
                                         <FormItem>
                                             <div className="flex flex-col">
@@ -610,42 +487,12 @@ export const ContactForm = () => {
                                                     <div className={"flex flex-row flex-wrap justify-start"}>
                                                         <div className={"flex flex-row items-center place-items-start"}>
                                                             <Checkbox
-                                                                name={"late_afternoon"}
-                                                                aria-label={"Late Afternoon"}
-                                                                onChange={field.onChange}
-                                                                checked={field.value === true}
+                                                                name={"tuesday"}
+                                                                aria-label={"Tuesday"}
                                                                 onCheckedChange={field.onChange}
                                                                 className={"addSmallRightMargin"}
                                                             />
-                                                            Late Afternoon
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <FormMessage />
-                                        </FormItem>
-                                    )}
-                                />
-                            </div>
-                            <div className={"flex gap-3"}>
-                                <FormField
-                                    control={form.control}
-                                    name={"client_scheduling_time_preferences.morning"}
-                                    render={({field}) => (
-                                        <FormItem>
-                                            <div className="flex flex-col">
-                                                <div className="flex flex-col flex-wrap">
-                                                    <div className={"flex flex-row flex-wrap justify-start"}>
-                                                        <div className={"flex flex-row items-center place-items-start"}>
-                                                            <Checkbox
-                                                                name={"morning"}
-                                                                aria-label={"Morning"}
-                                                                onChange={field.onChange}
-                                                                checked={field.value === true}
-                                                                onCheckedChange={field.onChange}
-                                                                className={"addSmallRightMargin"}
-                                                            />
-                                                            <span>Morning</span>
+                                                            Tuesday
                                                         </div>
                                                     </div>
                                                 </div>
@@ -656,22 +503,116 @@ export const ContactForm = () => {
                                 />
                                 <FormField
                                     control={form.control}
-                                    name={"client_scheduling_time_preferences.evening"}
+                                    name={"client_scheduling_day_preferences.wednesday"}
                                     render={({field}) => (
                                         <FormItem>
-                                            <div className="flex flex-col addLeftMargin">
-                                                <div className="flex flex-col flex-wrap addLeftMargin">
-                                                    <div className={"flex flex-row flex-wrap justify-start addLeftMargin"}>
+                                            <div className="flex flex-col">
+                                                <div className="flex flex-col flex-wrap">
+                                                    <div className={"flex flex-row flex-wrap justify-start"}>
                                                         <div className={"flex flex-row items-center place-items-start"}>
                                                             <Checkbox
-                                                                name={"evening"}
-                                                                aria-label={"Evening"}
+                                                                name={"wednesday"}
+                                                                aria-label={"Wednesday"}
+                                                                onCheckedChange={field.onChange}
                                                                 className={"addSmallRightMargin"}
-                                                                onChange={field.onChange}
-                                                                checked={field.value === true}
+                                                            />
+                                                            Wednesday
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <FormMessage />
+                                        </FormItem>
+                                    )}
+                                />
+                                <FormField
+                                    control={form.control}
+                                    name={"client_scheduling_day_preferences.thursday"}
+                                    render={({field}) => (
+                                        <FormItem>
+                                            <div className="flex flex-col">
+                                                <div className="flex flex-col flex-wrap">
+                                                    <div className={"flex flex-row flex-wrap justify-start"}>
+                                                        <div className={"flex flex-row items-center place-items-start"}>
+                                                            <Checkbox
+                                                                name={"thursday"}
+                                                                aria-label={"Thursday"}
+                                                                className={"addSmallRightMargin"}
                                                                 onCheckedChange={field.onChange}
                                                             />
-                                                            Evening
+                                                            Thursday
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <FormMessage />
+                                        </FormItem>
+                                    )}
+                                />
+                                <FormField
+                                    control={form.control}
+                                    name={"client_scheduling_day_preferences.friday"}
+                                    render={({field}) => (
+                                        <FormItem>
+                                            <div className="flex flex-col">
+                                                <div className="flex flex-col flex-wrap">
+                                                    <div className={"flex flex-row flex-wrap justify-start"}>
+                                                        <div className={"flex flex-row items-center place-items-start"}>
+                                                            <Checkbox
+                                                                name={"friday"}
+                                                                aria-label={"Friday"}
+                                                                className={"addSmallRightMargin"}
+                                                                onCheckedChange={field.onChange}
+                                                            />
+                                                            Friday
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <FormMessage />
+                                        </FormItem>
+                                    )}
+                                />
+                                <FormField
+                                    control={form.control}
+                                    name={"client_scheduling_day_preferences.saturday"}
+                                    render={({field}) => (
+                                        <FormItem>
+                                            <div className="flex flex-col">
+                                                <div className="flex flex-col flex-wrap">
+                                                    <div className={"flex flex-row flex-wrap justify-start"}>
+                                                        <div className={"flex flex-row items-center place-items-start"}>
+                                                            <Checkbox
+                                                                name={"saturday"}
+                                                                aria-label={"Saturday"}
+                                                                className={"addSmallRightMargin"}
+                                                                onCheckedChange={field.onChange}
+                                                            />
+                                                            Saturday
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <FormMessage />
+                                        </FormItem>
+                                    )}
+                                />
+                                <FormField
+                                    control={form.control}
+                                    name={"client_scheduling_day_preferences.sunday"}
+                                    render={({field}) => (
+                                        <FormItem>
+                                            <div className="flex flex-col">
+                                                <div className="flex flex-col flex-wrap">
+                                                    <div className={"flex flex-row flex-wrap justify-around"}>
+                                                        <div className={"flex flex-row items-center place-items-start"}>
+                                                            <Checkbox
+                                                                name={"sunday"}
+                                                                aria-label={"Sunday"}
+                                                                className={"addSmallRightMargin"}
+                                                                onCheckedChange={field.onChange}
+                                                            />
+                                                            Sunday
                                                         </div>
                                                     </div>
                                                 </div>
@@ -682,124 +623,236 @@ export const ContactForm = () => {
                                 />
                             </div>
                         </div>
+                        <FormLabel>Preferred Times {<MarkedRequired />}</FormLabel>
+                        <div className="flex flex-col addMarginBottom">
+                            <div className={"flex flex-row flex-wrap gap-3 addMarginBottom justify-start"}>
+                                <div className={"flex gap-3"}>
+                                    <FormField
+                                        control={form.control}
+                                        name={"client_scheduling_time_preferences.early_afternoon"}
+                                        render={({field}) => (
+                                            <FormItem>
+                                                <div className="flex flex-col">
+                                                    <div className="flex flex-col flex-wrap">
+                                                        <div className={"flex flex-row flex-wrap justify-start"}>
+                                                            <div className={"flex flex-row items-center place-items-start"}>
+                                                                <Checkbox
+                                                                    name={"early_afternoon"}
+                                                                    aria-label={"Early Afternoon"}
+                                                                    className={"addSmallRightMargin"}
+                                                                    onChange={field.onChange}
+                                                                    checked={field.value === true}
+                                                                    onCheckedChange={field.onChange}
+                                                                />
+                                                                Early Afternoon
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <FormMessage />
+                                            </FormItem>
+                                        )}
+                                    />
+                                    <FormField
+                                        control={form.control}
+                                        name={"client_scheduling_time_preferences.late_afternoon"}
+                                        render={({field}) => (
+                                            <FormItem>
+                                                <div className="flex flex-col">
+                                                    <div className="flex flex-col flex-wrap">
+                                                        <div className={"flex flex-row flex-wrap justify-start"}>
+                                                            <div className={"flex flex-row items-center place-items-start"}>
+                                                                <Checkbox
+                                                                    name={"late_afternoon"}
+                                                                    aria-label={"Late Afternoon"}
+                                                                    onChange={field.onChange}
+                                                                    checked={field.value === true}
+                                                                    onCheckedChange={field.onChange}
+                                                                    className={"addSmallRightMargin"}
+                                                                />
+                                                                Late Afternoon
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <FormMessage />
+                                            </FormItem>
+                                        )}
+                                    />
+                                </div>
+                                <div className={"flex gap-3"}>
+                                    <FormField
+                                        control={form.control}
+                                        name={"client_scheduling_time_preferences.morning"}
+                                        render={({field}) => (
+                                            <FormItem>
+                                                <div className="flex flex-col">
+                                                    <div className="flex flex-col flex-wrap">
+                                                        <div className={"flex flex-row flex-wrap justify-start"}>
+                                                            <div className={"flex flex-row items-center place-items-start"}>
+                                                                <Checkbox
+                                                                    name={"morning"}
+                                                                    aria-label={"Morning"}
+                                                                    onChange={field.onChange}
+                                                                    checked={field.value === true}
+                                                                    onCheckedChange={field.onChange}
+                                                                    className={"addSmallRightMargin"}
+                                                                />
+                                                                <span>Morning</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <FormMessage />
+                                            </FormItem>
+                                        )}
+                                    />
+                                    <FormField
+                                        control={form.control}
+                                        name={"client_scheduling_time_preferences.evening"}
+                                        render={({field}) => (
+                                            <FormItem>
+                                                <div className="flex flex-col addLeftMargin">
+                                                    <div className="flex flex-col flex-wrap addLeftMargin">
+                                                        <div className={"flex flex-row flex-wrap justify-start addLeftMargin"}>
+                                                            <div className={"flex flex-row items-center place-items-start"}>
+                                                                <Checkbox
+                                                                    name={"evening"}
+                                                                    aria-label={"Evening"}
+                                                                    className={"addSmallRightMargin"}
+                                                                    onChange={field.onChange}
+                                                                    checked={field.value === true}
+                                                                    onCheckedChange={field.onChange}
+                                                                />
+                                                                Evening
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <FormMessage />
+                                            </FormItem>
+                                        )}
+                                    />
+                                </div>
+                            </div>
+                        </div>
                     </div>
-
-                    <h4 className={"major addMarginTop"}>Recurring Services</h4>
-                    <FormField
-                        control={form.control}
-                        name={"client_requests_recurring_services"}
-                        render={({field}) => (
-                            <FormItem>
-                                <FormLabel className={"smallPadBottom"}>Would you like recurring services?</FormLabel>
-                                <FormControl>
-                                    <RadioGroup
-                                        onValueChange={field.onChange}
-                                        defaultValue={field.value}
-                                        className={"flex flex-row align-center addPadBottom justify-start"}
-                                    >
-                                        <FormItem className={"flex flex-row items-center"}>
-                                            <RadioGroupItem value={"yes_to_recurring_services"} className={"radioOverride"} />
-                                            Yes
-                                        </FormItem>
-                                        <FormItem className={"flex flex-row items-center addLeftMargin"}>
-                                            <RadioGroupItem value={"no_to_recurring_services"} className={"radioOverride"} />
-                                            No
-                                        </FormItem>
-                                    </RadioGroup>
-                                </FormControl>
-                                <FormMessage />
-                            </FormItem>
-                        )}
-                    />
-                    <div className={"addBottomMargin"}>
+                    <div id={"recurrency_section"} className={"section_spacer_2"}>
+                        <h4 className={"major addMarginTop"}>Recurring Services</h4>
+                        <FormField
+                            control={form.control}
+                            name={"client_requests_recurring_services"}
+                            render={({field}) => (
+                                <FormItem className={"section_spacer"}>
+                                    <FormLabel>Would you like recurring services?</FormLabel>
+                                    <FormControl>
+                                        <RadioGroup
+                                            onValueChange={field.onChange}
+                                            defaultValue={field.value}
+                                            className={"flex flex-row align-center justify-start"}
+                                        >
+                                            <FormItem className={"flex flex-row items-center"}>
+                                                <RadioGroupItem value={"yes_to_recurring_services"} className={"radioOverride"} />
+                                                Yes
+                                            </FormItem>
+                                            <FormItem className={"flex flex-row items-center addLeftMargin"}>
+                                                <RadioGroupItem value={"no_to_recurring_services"} className={"radioOverride"} />
+                                                No
+                                            </FormItem>
+                                        </RadioGroup>
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
                         <ConditionalSection_RecurrenceFrequency form={form} />
                     </div>
-
-                    <h4 className={"major addMarginTop"}>Additional Notes</h4>
-                    <FormField
-                        control={form.control}
-                        name={"client_additional_notes"}
-                        render={({field}) => (
-                            <FormItem>
-                                <FormLabel className={"label smallPadBottom"}>Should we know anything else?</FormLabel>
-                                <div className={"flex flex-col gap-2"}>
-                                    <FormControl>
-                                        <Textarea
-                                            {...field}
-                                            value={field.value}
-                                            onChange={field.onChange}
-                                            placeholder="Type your message here."
-                                        />
-                                    </FormControl>
-                                    <FormDescription className={"label"}>
-                                        Additional Service Requests, Uniform Requests,...etc.
-                                    </FormDescription>
-                                </div>
-                                <FormMessage />
-                            </FormItem>
-                        )}
-                    />
-
-                    <h4 className={"major addMarginTop"}>Agreements</h4>
-                    <FormField
-                        control={form.control}
-                        name={"client_accepts_toc"}
-                        render={({field}) => (
-                            <FormItem>
-                                <FormLabel className={"smallPadBottom"}>Accept terms and conditions</FormLabel>
-                                <div className={"flex flex-row justify-start"}>
-                                    <FormControl>
-                                        <Checkbox
-                                            onChange={field.onChange}
-                                            checked={field.value === true}
-                                            onCheckedChange={field.onChange}
-                                            disabled={true}
-                                        />
-                                    </FormControl>
-                                    <FormDescription className={"addLeftMargin"}>
-                                        <Button
-                                            className={"smBtn"}
-                                            type={"button"}
-                                            onClick={() => {
-                                        console.log("Toc was clicked!");
-                                        setViewingToc(true);
-                                        console.log("Past ToC?");
-                                    }}>terms and conditions</Button>.
-                                    </FormDescription>
-                                </div>
-                                <FormMessage />
-                            </FormItem>
-                        )}
-                    />
-
-                    <FormField
-                        control={form.control}
-                        name={"client_accepts_cleaning_supplies_agreement"}
-                        render={({field}) => (
-                            <FormItem>
-                                <FormLabel className={"smallPadBottom"}>Accept Cleaning Supplies Agreement</FormLabel>
-                                <div className={"flex flex-row justify-start"}>
-                                    <FormControl>
-                                        <Checkbox
-                                            onChange={field.onChange}
-                                            checked={field.value === true}
-                                            onCheckedChange={field.onChange}
-                                            disabled={true}
-                                        />
-                                    </FormControl>
-                                    <FormDescription className={""}>
-                                        <Button type={"button"} className={"addLeftMargin smBtn"} onClick={() => {
-                                        setViewingCsp(true);
-                                    }}>Cleaning Supplies Agreement</Button>
-                                    </FormDescription>
-                                </div>
-                                <FormMessage />
-                            </FormItem>
-                        )}
-                    />
-
-                    <div className={"flex justify-evenly paddingTopL"}>
-                        <Button type="reset">Reset</Button>
+                    <div id={"additional_notes_section"} className={"section_spacer_2"}>
+                        <h4 className={"major addMarginTop"}>Additional Notes</h4>
+                        <FormField
+                            control={form.control}
+                            name={"client_additional_notes"}
+                            render={({field}) => (
+                                <FormItem className={"section_spacer"}>
+                                    <FormLabel className={"label smallPadBottom"}>Should we know anything else?</FormLabel>
+                                    <div className={"flex flex-col gap-2"}>
+                                        <FormControl>
+                                            <Textarea
+                                                {...field}
+                                                value={field.value}
+                                                onChange={field.onChange}
+                                                placeholder="Type your message here."
+                                            />
+                                        </FormControl>
+                                        <FormDescription className={"label"}>
+                                            Additional Service Requests, Uniform Requests,...etc.
+                                        </FormDescription>
+                                    </div>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                    </div>
+                    <div id={"agreements_section"} className={"section_spacer_2"}>
+                        <h4 className={"major"}>Agreements</h4>
+                        <FormField
+                            control={form.control}
+                            name={"client_accepts_toc"}
+                            render={({field}) => (
+                                <FormItem className={"section_spacer"}>
+                                    <FormLabel className={"smallPadBottom"}>terms and conditions {<MarkedRequired />}</FormLabel>
+                                    <div className={"flex flex-row justify-start"}>
+                                        <FormControl>
+                                            <Checkbox
+                                                onChange={field.onChange}
+                                                checked={field.value === true}
+                                                onCheckedChange={field.onChange}
+                                                disabled={true}
+                                            />
+                                        </FormControl>
+                                        <FormDescription className={"addLeftMargin"}>
+                                            <Button
+                                                className={"smBtn"}
+                                                type={"button"}
+                                                onClick={() => {
+                                                    console.log("Toc was clicked!");
+                                                    setViewingToc(true);
+                                                    console.log("Past ToC?");
+                                                }}>terms and conditions</Button>
+                                        </FormDescription>
+                                    </div>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                        <FormField
+                            control={form.control}
+                            name={"client_accepts_cleaning_supplies_agreement"}
+                            render={({field}) => (
+                                <FormItem className={"section_spacer"}>
+                                    <FormLabel className={"smallPadBottom"}>Cleaning Supplies Agreement {<MarkedRequired />}</FormLabel>
+                                    <div className={"flex flex-row justify-start"}>
+                                        <FormControl>
+                                            <Checkbox
+                                                onChange={field.onChange}
+                                                checked={field.value === true}
+                                                onCheckedChange={field.onChange}
+                                                disabled={true}
+                                            />
+                                        </FormControl>
+                                        <FormDescription className={""}>
+                                            <Button type={"button"} className={"addLeftMargin smBtn"} onClick={() => {
+                                                setViewingCsp(true);
+                                            }}>Cleaning Supplies Agreement</Button>
+                                        </FormDescription>
+                                    </div>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                    </div>
+                    <div id={"form_button_panel"} className={"flex justify-evenly section_spacer_2"}>
+                        {/*<Button type="reset">Reset</Button>*/}
                         <Button type="submit" className={"primary"}>Send</Button>
                     </div>
                 </form>
