@@ -23,7 +23,6 @@ export const TermsAndConditionsArticle = (
     }
 ) => {
     const navigate = useNavigate();
-    console.log("From Contact Form? ", fromContactForm);
     return (
         <Dialog open={true} modal={true} onOpenChange={fromContactForm ? () => false : () => navigate("/")}>
             <DialogContent className={"dialogStyles"}>
@@ -59,13 +58,6 @@ export const TermsAndConditionsArticle = (
                             of the cleaners without their express consent. Violating this rule will result in
                             immediate termination of service.
                         </div>
-                        <h4 className={"addPadTop"}>Cleaning Supplies & Tools Agreement</h4>
-                        <div>
-                            Bare & Clean Co Clients are required to provide their own cleaning products, supplies,
-                            and tools. The client also relinquishes Bare & Clean Co. and its cleaners from any
-                            responsibility resulting from cleaning product damage - it is the Client's responsibility
-                            to ensure that all products provided are safe and appropriate for home surfaces and floors.
-                        </div>
                         <h4 className={"addPadTop"}>Payment and Refunds</h4>
                         <div>
                             Bare & Clean Co. Clients must pay in cash upfront before the service starts. Cash
@@ -83,7 +75,6 @@ export const TermsAndConditionsArticle = (
                     {
                         fromContactForm && (
                             <Button className={"addPadTop"} type={"button"} onClick={() => {
-                                console.log("Terms Accepted!");
                                 handleAcceptedTerms({ acceptedForm: "toc" });
                             }}>Accept Terms</Button>
                         )

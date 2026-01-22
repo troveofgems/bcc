@@ -23,7 +23,6 @@ export const CleaningSuppliesPolicyArticle = (
     }
 ) => {
     const navigate = useNavigate();
-    console.log("From Contact Form? ", fromContactForm);
     return (
         <Dialog open={true} modal={true} onOpenChange={fromContactForm ? () => {} : () => navigate("/")}>
             <DialogContent className={"dialogStyles"}>
@@ -36,13 +35,15 @@ export const CleaningSuppliesPolicyArticle = (
                     <ScrollArea className="h-72 rounded-md border">
                         <h4 className={"addPadTop"}>Cleaning Supplies and Tools</h4>
                         <div>
-                            x
+                            Clients are required to provide their own cleaning products, supplies,
+                            and tools. The client also relinquishes Bare & Clean Co. and its cleaners from any
+                            responsibility resulting from cleaning product damage - it is the Client's responsibility
+                            to ensure that all products provided are safe and appropriate for home surfaces and floors.
                         </div>
                     </ScrollArea>
                     {
                         fromContactForm && (
                             <Button className={"addPadTop"} type={"button"} onClick={() => {
-                                console.log("Terms Accepted!");
                                 handleAcceptedTerms({ acceptedForm: "csp" });
                             }}>Accept Terms</Button>
                         )

@@ -217,7 +217,7 @@ export const ContactForm = () => {
         const json = JSON.stringify(object, null, 2);
 
         try {
-            const response = await fetch("https://api.web3forms.com/submit", {
+            await fetch("https://api.web3forms.com/submit", {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json',
@@ -225,9 +225,6 @@ export const ContactForm = () => {
                 },
                 body: json
             });
-
-            const data = await response.json();
-            console.log(data);
         } catch (err) {
             console.error("Email Send Failed...", err);
         }
@@ -259,8 +256,6 @@ export const ContactForm = () => {
     };
 
     function onSubmit(values: z.infer<typeof formSchema>) {
-        console.log("Form Values? ", values);
-
         const formData = new FormData();
 
         const recurringServicesRequested = values.client_requests_recurring_services === "yes_to_recurring_services" ?
@@ -280,10 +275,7 @@ export const ContactForm = () => {
         formData.append("Additional Notes", values.client_additional_notes);
         formData.append("Client Acknowledged", "Terms and Conditions\nCleaning Supplies Policy");
 
-        sendEmail(formData, values).then(() => {
-            console.log("Called Send Email...");
-            setFormSubmitted(true);
-        });
+        sendEmail(formData, values).then(() => setFormSubmitted(true));
     }
 
     return !formSubmitted ? (
@@ -814,11 +806,7 @@ export const ContactForm = () => {
                                             <Button
                                                 className={"smBtn"}
                                                 type={"button"}
-                                                onClick={() => {
-                                                    console.log("Toc was clicked!");
-                                                    setViewingToc(true);
-                                                    console.log("Past ToC?");
-                                                }}>terms and conditions</Button>
+                                                onClick={() => setViewingToc(true)}>terms and conditions</Button>
                                         </FormDescription>
                                     </div>
                                     <FormMessage />
@@ -841,9 +829,7 @@ export const ContactForm = () => {
                                             />
                                         </FormControl>
                                         <FormDescription className={""}>
-                                            <Button type={"button"} className={"addLeftMargin smBtn"} onClick={() => {
-                                                setViewingCsp(true);
-                                            }}>Cleaning Supplies Agreement</Button>
+                                            <Button type={"button"} className={"addLeftMargin smBtn"} onClick={() => setViewingCsp(true)}>Cleaning Supplies Agreement</Button>
                                         </FormDescription>
                                     </div>
                                     <FormMessage />
