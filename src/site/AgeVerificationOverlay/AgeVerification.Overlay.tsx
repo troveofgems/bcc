@@ -40,7 +40,7 @@ export const AgeVerificationOverlay = (
                             your ID. Your ID must match the information that was provided to set up the appointment.
                         </div>
                     </ScrollArea>
-                    <div className={"flex flex-row justify-between"}>
+                    <div className={"flex flex-row justify-between ageVerificationButtons"}>
                         <Button
                             className={"addPadTop"}
                             type={"button"}

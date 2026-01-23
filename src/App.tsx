@@ -41,7 +41,6 @@ function App() {
                   <Route path="/cleaningSuppliesPolicy" element={<CleaningSuppliesPolicyArticle fromContactForm={false} handleAcceptedTerms={() => {}}/>} />
                   {/*Fallback route for 404 errors*/}
                   {/*<Route path="*" element={<NotFound />} />*/}
-
               </Routes>
           </Router>
       </>

@@ -1840,4 +1840,8 @@ label {
 		left: -4.6rem;
 		font-size: .75rem;
 	}
+
+	.ageVerificationButtons {
+		flex-direction: column;
+	}
 }
