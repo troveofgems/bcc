@@ -4,7 +4,7 @@ import {Header} from "./site/Header/Header.tsx";
 import {Footer} from "./site/Footer/Footer.tsx";
 import {Background} from "./site/Background/Background.tsx";
 
-import {BrowserRouter as Router, Routes, Route, Outlet, useNavigate} from 'react-router-dom';
+import {BrowserRouter as Router, Routes, Route, Outlet} from 'react-router-dom';
 import {ServicesArticle} from "./site/Main/articles/Services/Services.Article.tsx";
 import {AboutArticle} from "./site/Main/articles/About/About.Article.tsx";
 import {PricingArticle} from "./site/Main/articles/Pricing/Pricing.Article.tsx";
