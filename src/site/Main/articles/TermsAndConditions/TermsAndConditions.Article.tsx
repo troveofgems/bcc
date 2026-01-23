@@ -33,6 +33,12 @@ export const TermsAndConditionsArticle = (
                 </DialogHeader>
                 <DialogDescription className={"services_description"}>
                     <ScrollArea className="h-72 rounded-md border">
+                        <h4 className={"addPadTop"}>Age Verification</h4>
+                        <div>
+                            Anyone who schedules service with Bare & Clean Co must be 18 years of age or older.
+                            You will be asked for your ID by the cleaner upon arrival. Please be prepared to show
+                            your ID. Your ID must match the information that was provided to set up the appointment.
+                        </div>
                         <h4 className={"addPadTop"}>Termination of Service</h4>
                         <div>
                             Termination of Service is dependent on the cleaner's safety and comfort while completing
