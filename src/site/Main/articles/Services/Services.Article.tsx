@@ -17,7 +17,7 @@ export const ServicesArticle = () => {
     const navigate = useNavigate();
     return (
         <Dialog modal={true} open={true} onOpenChange={() => navigate("/")}>
-            <DialogContent className={"dialogStyles"}>
+            <DialogContent className={"dialogStyles dialogModal"}>
                 <DialogHeader>
                     <DialogTitle className={"major"}>
                         Services
@@ -26,7 +26,7 @@ export const ServicesArticle = () => {
                         Bare & Clean Co. provides professional residential cleaning through structured, time-based
                         offerings designed for private clients who value discretion, consistency, and elevated
                         standards.
-                        <ScrollArea className="h-72 rounded-md border">
+                        <ScrollArea className="h-92 rounded-md border">
                             <span className="image main"><img src={Image2} alt=""/></span>
                             <h4>Regular Services</h4>
                             <ul className={"ulOverride"}>
