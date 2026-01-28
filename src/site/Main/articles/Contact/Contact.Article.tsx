@@ -25,7 +25,7 @@ export const ContactArticle = () => {
                         service standards.
                     </DialogDescription>
                 </DialogHeader>
-                <ScrollArea className="h-72 rounded-md border paddingTopL">
+                <ScrollArea className="h-92 rounded-md border paddingTopL">
                     <ContactForm key={"contact_form"} />
                 </ScrollArea>
             </DialogContent>
