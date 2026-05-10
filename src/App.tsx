@@ -13,19 +13,19 @@ import {TermsAndConditionsArticle} from "./site/Main/articles/TermsAndConditions
 import {
     CleaningSuppliesPolicyArticle
 } from "./site/Main/articles/CleaningSuppliesPolicy/CleaningSuppliesPolicy.Article.tsx";
-import {useState} from "react";
-import {AgeVerificationOverlay} from "./site/AgeVerificationOverlay/AgeVerification.Overlay.tsx";
+//import {useState} from "react";
+//import {AgeVerificationOverlay} from "./site/AgeVerificationOverlay/AgeVerification.Overlay.tsx";
 
 function App() {
-    const [acceptedAgeVerification, setAcceptedAgeVerification] = useState(false);
+    /*const [acceptedAgeVerification, setAcceptedAgeVerification] = useState(false);*/
   return (
       <>
           <Router>
           <div id={"wrapper"}>
-              <AgeVerificationOverlay
+              {/*<AgeVerificationOverlay
                   acceptedAgeVerification={acceptedAgeVerification}
                   setAcceptedAgeVerification={setAcceptedAgeVerification}
-              />
+              />*/}
               <Header />
               <Outlet />
               <Footer />
@@ -47,4 +47,4 @@ function App() {
   );
 }
 
-export default App
+export default App;
